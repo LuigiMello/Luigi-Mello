@@ -10,7 +10,8 @@ const stats = [
   { value: '5',   key: 'aiTools'      },
 ];
 
-const AVATAR = '/avatar.jpg';
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+const AVATAR = `${BASE}/avatar.jpg`;
 
 export default function About() {
   const { tr } = useLanguage();

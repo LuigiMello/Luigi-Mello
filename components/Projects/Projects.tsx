@@ -4,6 +4,8 @@ import { useLanguage } from '@/context/LanguageContext';
 import { useInView } from '@/hooks/useInView';
 import styles from './Projects.module.css';
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 export default function Projects() {
   const { tr } = useLanguage();
   const { ref, inView } = useInView();
@@ -37,7 +39,7 @@ export default function Projects() {
                 <div className={styles.cardPreview}>
                   {(project as { image?: string }).image ? (
                     <Image
-                      src={(project as { image?: string }).image!}
+                      src={`${BASE}${(project as { image?: string }).image!}`}
                       alt={project.name}
                       fill
                       className={styles.previewImg}
