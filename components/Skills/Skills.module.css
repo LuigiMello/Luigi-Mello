@@ -1,0 +1,239 @@
+.skills {
+  padding: 120px 0 100px;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Filter tabs ── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+}
+
+.filterBtn i { font-size: 0.78rem; }
+
+.filterBtn:hover {
+  border-color: var(--accent-border);
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+.filterActive {
+  border-color: var(--accent);
+  background: rgba(0, 208, 255, 0.1);
+  color: var(--accent);
+  box-shadow: 0 0 14px rgba(0, 208, 255, 0.15);
+}
+
+/* ── Marquee ── */
+.marqueeWrapper {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 4px 0;
+}
+
+.fadeL {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(to right, var(--bg-primary), transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.fadeR {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(to left, var(--bg-primary), transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  /* duration scales with item count: base 2.4s per item */
+  animation: scrollLeft calc(var(--pill-count, 10) * 2.4s) linear infinite;
+}
+
+.track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Pill ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 10px 20px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.pill:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-3px);
+}
+
+.pillIconWrap {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pillDevicon {
+  font-size: 1.35rem;
+}
+
+.pillCustom {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pillName {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Category summary ── */
+.cats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-top: 52px;
+}
+
+.cat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 12px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cat::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.cat:hover {
+  border-color: var(--accent-border);
+  transform: translateY(-6px) !important;
+  box-shadow: var(--shadow-accent);
+}
+
+.cat:hover::after,
+.catActive::after {
+  transform: scaleX(1);
+}
+
+.catActive {
+  border-color: var(--accent) !important;
+  background: rgba(0, 208, 255, 0.07) !important;
+  box-shadow: 0 0 20px rgba(0, 208, 255, 0.12);
+}
+
+.cats.visible .cat {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.catIcon {
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+.catLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.catCount {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .cats { grid-template-columns: repeat(3, 1fr); }
+  .filters { gap: 8px; }
+  .filterBtn { padding: 7px 13px; font-size: 0.77rem; }
+}
+
+@media (max-width: 480px) {
+  .cats { grid-template-columns: repeat(2, 1fr); }
+}

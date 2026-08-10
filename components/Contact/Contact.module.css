@@ -1,0 +1,196 @@
+.contact {
+  padding: 120px 24px 140px;
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 208, 255, 0.05) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.inner {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+
+.inner.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.85;
+  max-width: 500px;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 2px;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, rgba(0,208,255,0.1) 0%, rgba(123,47,247,0.08) 100%);
+  transition: var(--transition);
+}
+
+.card:hover {
+  background: linear-gradient(90deg, rgba(0,208,255,0.3) 0%, rgba(123,47,247,0.2) 100%);
+  transform: translateX(6px);
+  box-shadow: -6px 0 30px rgba(0, 208, 255, 0.1);
+}
+
+.cardInner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  background: var(--bg-card);
+  border-radius: calc(var(--radius) - 2px);
+  padding: 20px 24px;
+}
+
+.cardIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: rgba(0, 208, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--icon-color, var(--accent));
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.card:hover .cardIcon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px var(--icon-color, var(--accent)));
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.cardLabel {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-highlight);
+}
+
+.cardDesc {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+}
+
+.cardArrow {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  font-family: var(--font-mono);
+}
+
+.card:hover .cardArrow {
+  color: var(--accent);
+  transform: translateX(6px);
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.dividerText {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+/* Email */
+.emailBox {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emailLabel {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.emailLink {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  transition: var(--transition);
+  position: relative;
+}
+
+.emailLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.emailLink:hover::after { transform: scaleX(1); }
+
+@media (max-width: 560px) {
+  .cardInner { padding: 16px 18px; gap: 14px; }
+}
