@@ -1,41 +1,41 @@
 'use client';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useLanguage } from '@/context/LanguageContext';
-import ParticleCanvas from '@/components/ParticleCanvas/ParticleCanvas';
 import styles from './Hero.module.css';
+
+const ThreeHero = dynamic(() => import('@/components/ThreeHero/ThreeHero'), { ssr: false });
 
 export default function Hero() {
   const { tr } = useLanguage();
   const [displayText, setDisplayText] = useState('');
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [roleIndex, setRoleIndex]     = useState(0);
+  const [isDeleting, setIsDeleting]   = useState(false);
+  const [mounted, setMounted]         = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    const roles = tr.hero.roles;
+    const roles   = tr.hero.roles;
     const current = roles[roleIndex];
-    const speed = isDeleting ? 40 : 90;
+    const speed   = isDeleting ? 38 : 85;
 
-    const timeout = setTimeout(() => {
+    const t = setTimeout(() => {
       if (!isDeleting) {
         const next = current.slice(0, displayText.length + 1);
         setDisplayText(next);
-        if (next.length === current.length) {
-          setTimeout(() => setIsDeleting(true), 2200);
-        }
+        if (next.length === current.length) setTimeout(() => setIsDeleting(true), 2200);
       } else {
         const next = current.slice(0, displayText.length - 1);
         setDisplayText(next);
         if (next.length === 0) {
           setIsDeleting(false);
-          setRoleIndex((i) => (i + 1) % roles.length);
+          setRoleIndex(i => (i + 1) % roles.length);
         }
       }
     }, speed);
 
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(t);
   }, [displayText, isDeleting, roleIndex, tr.hero.roles]);
 
   const scrollTo = (id: string) =>
@@ -43,13 +43,20 @@ export default function Hero() {
 
   return (
     <section id="home" className={styles.hero}>
-      <ParticleCanvas />
+      {/* Three.js — posição absoluta, data-speed para parallax */}
+      <div className={styles.threeWrap} data-speed="0.6">
+        <ThreeHero />
+      </div>
 
-      <div className={styles.glow1} />
-      <div className={styles.glow2} />
+      {/* Glows */}
+      <div className={styles.glow1} data-speed="0.75" />
+      <div className={styles.glow2} data-speed="0.8" />
 
-      <div className={`${styles.content} ${mounted ? styles.visible : ''}`}>
-
+      {/* Content */}
+      <div
+        className={`${styles.content} ${mounted ? styles.visible : ''}`}
+        data-speed="0.92"
+      >
         <div className={styles.badge}>
           <span className={styles.badgeDot} />
           {tr.hero.greeting}
