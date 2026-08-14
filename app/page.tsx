@@ -1,5 +1,6 @@
 import LoadingScreen from '@/components/LoadingScreen/LoadingScreen';
-import Navbar       from '@/components/Navbar/Navbar';
+import Navbar        from '@/components/Navbar/Navbar';
+import Mascot        from '@/components/Mascot/Mascot';
 import SmoothScroll  from '@/components/SmoothScroll/SmoothScroll';
 import Hero          from '@/components/Hero/Hero';
 import About         from '@/components/About/About';
@@ -13,10 +14,11 @@ export default function Home() {
   return (
     <>
       <LoadingScreen />
-      {/* Navbar fora do smoother — position fixed real */}
+      {/* Fixed elements — outside SmoothScroll */}
       <Navbar />
+      <Mascot />
 
-      {/* Tudo dentro do ScrollSmoother */}
+      {/* Scrollable content */}
       <SmoothScroll>
         <main>
           <Hero />

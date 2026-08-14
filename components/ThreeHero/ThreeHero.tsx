@@ -77,12 +77,9 @@ export default function ThreeHero() {
       const makeMesh = (text: string, size: number, mat: import('three').Material) => {
         const geo = new TextGeometry(text, {
           font, size,
-          depth:         size * 0.28,
-          curveSegments: 12,
-          bevelEnabled:  true,
-          bevelThickness: size * 0.045,
-          bevelSize:     size * 0.022,
-          bevelSegments: 6,
+          depth:         size * 0.18,
+          curveSegments: 16,
+          bevelEnabled:  false,       /* sem bevel = sem quadriculado */
         });
         geo.computeBoundingBox();
         const bb = geo.boundingBox!;
@@ -91,22 +88,22 @@ export default function ThreeHero() {
       };
 
       /* "Luigi" — glossy cyan */
-      const luigi = makeMesh('Luigi', 1.08, new THREE.MeshPhongMaterial({
+      const luigi = makeMesh('Luigi', 1.1, new THREE.MeshPhongMaterial({
         color:    new THREE.Color(0x00c8f0),
-        emissive: new THREE.Color(0x005577),
-        specular: new THREE.Color(0xffffff),
-        shininess: 180,
-      }));
-      luigi.position.set(0, 1.0, 0);
-
-      /* "Mello" — polished white-silver */
-      const mello = makeMesh('Mello', 1.08, new THREE.MeshPhongMaterial({
-        color:    new THREE.Color(0xeef6ff),
-        emissive: new THREE.Color(0x112233),
+        emissive: new THREE.Color(0x004466),
         specular: new THREE.Color(0xffffff),
         shininess: 220,
       }));
-      mello.position.set(0, -0.55, 0);
+      luigi.position.set(0, 1.55, 0);   /* mais alto */
+
+      /* "Mello" — polished white-silver */
+      const mello = makeMesh('Mello', 1.1, new THREE.MeshPhongMaterial({
+        color:    new THREE.Color(0xeef6ff),
+        emissive: new THREE.Color(0x0d1f35),
+        specular: new THREE.Color(0xffffff),
+        shininess: 260,
+      }));
+      mello.position.set(0, 0.05, 0);   /* mais alto também */
 
       const grp = new THREE.Group();
       grp.add(luigi, mello);
@@ -139,9 +136,9 @@ export default function ThreeHero() {
         enter  = Math.min(1, enter + 0.009);
         const ease = 1 - Math.pow(1 - enter, 3);
 
-        /* entrance + float */
-        const baseY  = -3.8 + 3.8 * ease;
-        const floatY = enter >= 1 ? Math.sin(tick * 0.5) * 0.14 : 0;
+        /* entrance from y=-3.3 → y=0.5 (text sits in upper half of canvas) */
+        const baseY  = -3.3 + 3.8 * ease;
+        const floatY = enter >= 1 ? Math.sin(tick * 0.5) * 0.12 : 0;
         grp.position.y = baseY + floatY;
         grp.rotation.y = -0.35 * (1 - ease) + Math.sin(tick * 0.28) * 0.05 * ease;
 
@@ -160,8 +157,8 @@ export default function ThreeHero() {
         window.removeEventListener('mousemove', onMouse);
         window.removeEventListener('resize', onResize);
         cancelAnimationFrame(animId);
-        rdr!.dispose();
-        if (mount.contains(rdr!.domElement)) mount.removeChild(rdr!.domElement);
+        try { rdr!.dispose(); } catch (_) {}
+        try { if (rdr && mount && mount.contains(rdr.domElement)) mount.removeChild(rdr.domElement); } catch (_) {}
       };
     };
 
@@ -170,12 +167,14 @@ export default function ThreeHero() {
     return () => {
       active = false;
       cancelAnimationFrame(animId);
-      const fn = (mount as any).__three_teardown;
-      if (typeof fn === 'function') { fn(); delete (mount as any).__three_teardown; }
-      else if (rdr) {
-        rdr.dispose();
-        if (mount.contains(rdr.domElement)) mount.removeChild(rdr.domElement);
-      }
+      try {
+        const fn = (mount as any).__three_teardown;
+        if (typeof fn === 'function') { fn(); delete (mount as any).__three_teardown; }
+        else if (rdr) {
+          rdr.dispose();
+          if (mount && mount.contains(rdr.domElement)) mount.removeChild(rdr.domElement);
+        }
+      } catch (_) {}
     };
   }, []);
 

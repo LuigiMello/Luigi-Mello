@@ -1,0 +1,148 @@
+/* Fixed mascot — right side of viewport */
+.mascot {
+  position: fixed;
+  right: 24px;
+  bottom: 32px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.mascot.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Speech bubble ── */
+.bubble {
+  position: relative;
+  background: #ffffff;
+  border: 3px solid #111;
+  border-radius: 18px;
+  padding: 12px 14px;
+  max-width: 220px;
+  min-width: 160px;
+  box-shadow: 4px 4px 0 #111, 0 0 0 1px rgba(0, 208, 255, 0.3);
+  animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.4) translateY(20px); opacity: 0; }
+  to   { transform: scale(1) translateY(0);       opacity: 1; }
+}
+
+/* Subtle pulse every 4s */
+.bubble {
+  animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both,
+             pulseBubble 4s 1s ease-in-out infinite;
+}
+
+@keyframes pulseBubble {
+  0%, 90%, 100% { transform: scale(1);    box-shadow: 4px 4px 0 #111, 0 0 0 1px rgba(0, 208, 255, 0.3); }
+  95%           { transform: scale(1.04); box-shadow: 4px 4px 0 #111, 0 0 12px rgba(0, 208, 255, 0.5); }
+}
+
+.bubbleText {
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #111;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  margin: 0;
+}
+
+/* Blinking cursor in typewriter */
+.cursor {
+  display: inline-block;
+  color: #00d0ff;
+  font-weight: 900;
+  animation: blink 0.7s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Comic tail — points down-left toward the character */
+.tail {
+  position: absolute;
+  bottom: -22px;
+  left: 28px;
+  width: 0;
+  height: 0;
+}
+
+/* Outer (border) */
+.tail::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  border-left: 14px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 22px solid #111;
+}
+
+/* Inner (white fill) */
+.tail::after {
+  content: '';
+  position: absolute;
+  top: -2px; left: 2px;
+  border-left: 11px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 19px solid #ffffff;
+}
+
+/* ── Character ── */
+.character {
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-8px); }
+}
+
+.charImg {
+  width: 96px !important;
+  height: 128px !important;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 12px;
+  border: 3px solid #111;
+  box-shadow: 4px 4px 0 #111, 0 0 0 2px rgba(0, 208, 255, 0.4);
+  display: block;
+}
+
+/* Hide on small screens (mobile) where space is tight */
+@media (max-width: 900px) {
+  .mascot {
+    right: 8px;
+    bottom: 20px;
+  }
+  .bubble {
+    max-width: 160px;
+    min-width: 120px;
+    padding: 8px 10px;
+  }
+  .bubbleText {
+    font-size: 0.70rem;
+  }
+  .charImg {
+    width: 72px !important;
+    height: 96px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .mascot { display: none; }
+}
