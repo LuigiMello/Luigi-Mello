@@ -1,3 +1,4 @@
+import LoadingScreen from '@/components/LoadingScreen/LoadingScreen';
 import Navbar       from '@/components/Navbar/Navbar';
 import SmoothScroll  from '@/components/SmoothScroll/SmoothScroll';
 import Hero          from '@/components/Hero/Hero';
@@ -11,6 +12,7 @@ import Footer        from '@/components/Footer/Footer';
 export default function Home() {
   return (
     <>
+      <LoadingScreen />
       {/* Navbar fora do smoother — position fixed real */}
       <Navbar />
 

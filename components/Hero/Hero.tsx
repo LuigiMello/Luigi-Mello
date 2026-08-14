@@ -43,29 +43,25 @@ export default function Hero() {
 
   return (
     <section id="home" className={styles.hero}>
-      {/* Three.js — posição absoluta, data-speed para parallax */}
-      <div className={styles.threeWrap} data-speed="0.6">
+      {/* Three.js scene — fills entire hero */}
+      <div className={styles.threeWrap}>
         <ThreeHero />
       </div>
 
       {/* Glows */}
-      <div className={styles.glow1} data-speed="0.75" />
-      <div className={styles.glow2} data-speed="0.8" />
+      <div className={styles.glow1} />
+      <div className={styles.glow2} />
 
-      {/* Content */}
-      <div
-        className={`${styles.content} ${mounted ? styles.visible : ''}`}
-        data-speed="0.92"
-      >
-        <div className={styles.badge}>
-          <span className={styles.badgeDot} />
-          {tr.hero.greeting}
-        </div>
+      {/* Badge — small rectangle at top */}
+      <div className={`${styles.heroBadge} ${mounted ? styles.heroBadgeVisible : ''}`}>
+        <span className={styles.badgeDot} />
+        {tr.hero.greeting}
+      </div>
 
-        <h1 className={styles.name}>
-          <span className={styles.nameOutline}>Luigi</span>
-          <span className={styles.nameSolid}>Mello</span>
-        </h1>
+      {/* Main content — sits below 3D text area */}
+      <div className={`${styles.content} ${mounted ? styles.visible : ''}`}>
+        {/* Spacer: 3D "Luigi Mello" occupies this vertical space */}
+        <div className={styles.nameSpacer} aria-hidden="true" />
 
         <div className={styles.roleRow}>
           <span className={styles.roleSlash}>&#47;&#47;&nbsp;</span>

@@ -5,9 +5,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--nav-height) + 60px) 24px 120px;
+  padding: 80px 24px 120px;
   overflow: hidden;
   text-align: center;
+}
+
+/* Placeholder para o texto 3D — empurra o resto do conteúdo pra baixo */
+.nameSpacer {
+  height: clamp(160px, 26vh, 260px);
+  width: 100%;
+  flex-shrink: 0;
+  pointer-events: none;
 }
 
 /* Three.js wrap */
@@ -16,6 +24,35 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
+}
+
+/* Badge — floating at top of hero */
+.heroBadge {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 208, 255, 0.08);
+  border: 1px solid rgba(0, 208, 255, 0.3);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 8px 20px;
+  border-radius: 50px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-12px);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+}
+.heroBadge.heroBadgeVisible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Glows */
