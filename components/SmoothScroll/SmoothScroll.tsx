@@ -2,11 +2,18 @@
 import { useEffect, useRef } from 'react';
 import styles from './SmoothScroll.module.css';
 
-export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+export default function SmoothScroll({
+  children,
+  disabled = false,
+}: {
+  children: React.ReactNode;
+  disabled?: boolean;
+}) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (disabled) return;
     let smoother: any;
 
     const init = async () => {
@@ -28,7 +35,18 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
     init();
     return () => { smoother?.kill(); };
-  }, []);
+  }, [disabled]);
+
+  // Embedded contexts (e.g. inside the Brave window mock) scroll their own
+  // bounded container natively — ScrollSmoother assumes real page/document
+  // scroll, which doesn't exist inside a fixed-size boxed window.
+  if (disabled) {
+    return (
+      <div id="embedded-scroll" className={styles.plain}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div ref={wrapperRef} id="smooth-wrapper" className={styles.wrapper}>

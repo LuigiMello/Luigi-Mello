@@ -1,0 +1,13 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 15%, rgba(23, 92, 76, 0.55), transparent 45%),
+    radial-gradient(circle at 88% 78%, rgba(0, 208, 255, 0.12), transparent 50%),
+    linear-gradient(160deg, #0a1830 0%, #0d1f3c 45%, #142a4a 100%);
+  font-family: var(--font-sans);
+  user-select: none;
+}
+

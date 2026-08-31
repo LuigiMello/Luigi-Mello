@@ -1,0 +1,132 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px 20px 90px;
+  z-index: 8;
+}
+
+.window {
+  width: 100%;
+  max-width: 1040px;
+  height: 100%;
+  max-height: 720px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary, #050e1f);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  animation: pop 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.94) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.titleBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px 0;
+  background: #23262f;
+}
+
+.traffic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+}
+
+.red    { background: #ff5f57; }
+.yellow { background: #febc2e; }
+.green  { background: #28c840; }
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px 9px;
+  background: #16181f;
+  border-radius: 8px 8px 0 0;
+  max-width: 260px;
+}
+
+.tabDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fb542b;
+  flex-shrink: 0;
+}
+
+.tabTitle {
+  font-size: 0.76rem;
+  color: #d6d9e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addressBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: #16181f;
+}
+
+.navArrow {
+  color: #8b909c;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.navArrowDim {
+  opacity: 0.4;
+}
+
+.urlBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  background: #24262f;
+  border-radius: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #d6d9e0;
+}
+
+.lockIcon {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.viewport {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  transform: translateZ(0);
+  background: var(--bg-primary, #050e1f);
+}
+
+@media (max-width: 700px) {
+  .overlay { padding: 14px 6px 76px; }
+  .tab { max-width: 160px; }
+}

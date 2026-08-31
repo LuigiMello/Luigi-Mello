@@ -1,9 +1,11 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { useScrollContainer } from '@/context/ScrollContainerContext';
 
 export function useInView(threshold = 0.15) {
   const ref  = useRef<HTMLElement | null>(null);
   const [inView, setInView] = useState(false);
+  const scroller = useScrollContainer();
 
   useEffect(() => {
     const el = ref.current;
@@ -19,6 +21,7 @@ export function useInView(threshold = 0.15) {
 
         trigger = ScrollTrigger.create({
           trigger: el,
+          scroller: scroller || window,
           start: 'top 85%',
           onEnter: () => setInView(true),
         });
@@ -26,7 +29,7 @@ export function useInView(threshold = 0.15) {
         /* Fallback: IntersectionObserver for static build / no gsap */
         const obs = new IntersectionObserver(
           ([entry]) => { if (entry.isIntersecting) { setInView(true); obs.disconnect(); } },
-          { threshold }
+          { threshold, root: scroller || null }
         );
         obs.observe(el);
       }
@@ -34,7 +37,7 @@ export function useInView(threshold = 0.15) {
 
     init();
     return () => { trigger?.kill(); };
-  }, [threshold]);
+  }, [threshold, scroller]);
 
   return { ref, inView };
 }

@@ -11,3 +11,9 @@
   overflow: visible;
   will-change: transform;
 }
+
+.plain {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
