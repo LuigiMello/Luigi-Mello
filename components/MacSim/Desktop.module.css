@@ -87,6 +87,15 @@
   border-radius: 26px;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45);
   z-index: 5;
+  max-width: calc(100vw - 20px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dock::-webkit-scrollbar {
+  display: none;
 }
 
 .dockIcon {
@@ -143,5 +152,21 @@
   .dockDivider {
     height: 28px;
     margin: 0 2px;
+  }
+}
+
+@media (max-width: 420px) {
+  .dock {
+    gap: 4px;
+    padding: 6px 7px;
+  }
+  .dockIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+  .dockDivider {
+    height: 22px;
+    margin: 0 1px;
   }
 }

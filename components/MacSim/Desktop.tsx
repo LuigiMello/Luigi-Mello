@@ -4,7 +4,6 @@ import styles from './Desktop.module.css';
 import DiscordWindow from './DiscordWindow';
 import BraveWindow from './BraveWindow';
 import {
-  PipetteIcon,
   DevToolIcon,
   NotebookIcon,
   TerminalIcon,
@@ -22,7 +21,7 @@ type AppId = 'brave' | 'discord' | null;
 
 const idleDock = [
   { key: 'spotify', img: `${BASE}/icones/spotify.png`, label: 'Spotify' },
-  { key: 'pipette', Icon: PipetteIcon, label: 'Color Picker' },
+  { key: 'github', img: `${BASE}/icones/git.png`, label: 'GitHub', href: 'https://github.com/LuigiMello' },
   { key: 'code', img: `${BASE}/icones/vscode.png`, label: 'VS Code' },
   { key: 'devtool', Icon: DevToolIcon, label: 'IntelliJ IDEA' },
   { key: 'notebook', Icon: NotebookIcon, label: 'Notas' },
@@ -97,11 +96,14 @@ export default function Desktop({
           <img src={`${BASE}/icones/discord.png`} alt="Discord" />
         </button>
 
-        {idleDock.map(({ key, Icon, img, label }) => (
+        {idleDock.map(({ key, Icon, img, label, href }) => (
           <button
             key={key}
             className={`${styles.dockIcon} ${bounce === key ? styles.bounce : ''}`}
-            onClick={() => bump(key)}
+            onClick={() => {
+              bump(key);
+              if (href) window.open(href, '_blank', 'noopener,noreferrer');
+            }}
             title={label}
           >
             {img ? <img src={img} alt={label} /> : Icon && <Icon />}

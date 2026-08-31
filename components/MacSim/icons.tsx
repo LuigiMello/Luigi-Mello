@@ -57,19 +57,6 @@ export function SpotifyIcon() {
   );
 }
 
-export function PipetteIcon() {
-  return (
-    <svg viewBox="0 0 48 48" width="100%" height="100%">
-      <rect width="48" height="48" rx="11" fill="#ff7a30" />
-      <g transform="rotate(45 24 24)">
-        <rect x="22" y="9" width="4" height="15" rx="2" fill="#fff" />
-        <rect x="20.5" y="22.5" width="7" height="15" rx="2.4" fill="#fff" />
-        <circle cx="24" cy="9.5" r="3.2" fill="#fff" />
-      </g>
-    </svg>
-  );
-}
-
 export function DevToolIcon() {
   return (
     <svg viewBox="0 0 48 48" width="100%" height="100%">
