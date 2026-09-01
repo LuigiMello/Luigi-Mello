@@ -1,7 +1,7 @@
 .footer {
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border);
-  padding: 48px 24px 32px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 40px 24px 28px;
 }
 
 .container {
@@ -13,71 +13,74 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.mark {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .logo {
-  font-family: var(--font-mono);
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
 }
 
 .tag {
-  color: var(--text-secondary);
-  font-size: 1rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.edition {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: rgba(241, 238, 227, 0.5);
 }
 
 .socials {
   display: flex;
-  gap: 16px;
+  gap: 10px;
 }
 
 .social {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--bg-card);
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(241, 238, 227, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
-  font-size: 1rem;
+  color: rgba(241, 238, 227, 0.7);
+  font-size: 0.95rem;
   transition: var(--transition);
 }
 
 .social:hover {
-  color: var(--accent);
-  border-color: var(--accent-border);
-  transform: translateY(-3px);
+  color: var(--paper);
+  border-color: var(--accent);
+  background: var(--accent);
 }
 
 .divider {
   height: 1px;
-  background: var(--border);
-  margin-bottom: 28px;
+  background: rgba(241, 238, 227, 0.16);
+  margin-bottom: 18px;
 }
 
-.copy {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+.colophon {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: rgba(241, 238, 227, 0.55);
   text-align: center;
 }
 
 .name {
-  color: var(--text-primary);
+  color: var(--paper);
   font-weight: 600;
-}
-
-.accent {
-  color: var(--accent);
-  font-family: var(--font-mono);
-}
-
-@media (max-width: 560px) {
-  .top {
-    flex-direction: column;
-    gap: 20px;
-  }
 }

@@ -14,76 +14,71 @@ export default function Projects() {
     <section id="projects" className={styles.projects}>
       <div className={styles.container}>
         <div className="section-header">
-          <h2 className="section-title">
-            {tr.projects.title.split(' ')[0]}{' '}
-            <span>{tr.projects.title.split(' ').slice(1).join(' ')}</span>
-          </h2>
-          <p className="section-subtitle">{tr.projects.subtitle}</p>
+          <span className="chapter-num">03</span>
+          <h2 className="section-title">{tr.projects.title}</h2>
+          <span className="section-subtitle">{tr.projects.subtitle}</span>
         </div>
 
         <div
           ref={ref as React.RefObject<HTMLDivElement>}
           className={`${styles.grid} ${inView ? styles.visible : ''}`}
         >
-          {tr.projects.items.map((project, i) => (
-            <article
-              key={`${project.name}-${i}`}
-              className={styles.card}
-              style={{
-                transitionDelay: `${i * 120}ms`,
-                '--card-color': (project as { color?: string }).color ?? 'var(--accent)',
-              } as React.CSSProperties}
-            >
-              <div className={styles.cardInner}>
-                {/* Image preview */}
+          {tr.projects.items.map((project, i) => {
+            const p = project as typeof project & { image?: string; demo?: string };
+            const live = Boolean(p.demo && p.demo !== '#');
+            return (
+              <article
+                key={`${p.name}-${i}`}
+                className={styles.card}
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                <div className={styles.reportHead}>
+                  <span className={styles.reportNum}>REG. {String(i + 1).padStart(2, '0')}</span>
+                  <span className={`${styles.status} ${live ? styles.statusLive : styles.statusProto}`}>
+                    {live ? 'EM PRODUÇÃO' : 'PROTÓTIPO'}
+                  </span>
+                </div>
+
                 <div className={styles.cardPreview}>
-                  {(project as { image?: string }).image ? (
+                  {p.image ? (
                     <Image
-                      src={`${BASE}${(project as { image?: string }).image!}`}
-                      alt={project.name}
+                      src={`${BASE}${p.image}`}
+                      alt={p.name}
                       fill
                       className={styles.previewImg}
-                      sizes="(max-width: 768px) 100vw, 380px"
+                      sizes="(max-width: 768px) 100vw, 360px"
                     />
                   ) : (
                     <div className={styles.previewPlaceholder}>
-                      <i className="fas fa-code" />
                       <span>{tr.projects.comingSoon}</span>
                     </div>
                   )}
                 </div>
 
-                <div className={styles.cardBody}>
-                  <div className={styles.cardTop}>
-                    <div className={styles.folderIcon}>
-                      <i className="fas fa-folder-open" />
-                    </div>
-                    <div className={styles.cardLinks}>
-                      {project.github !== '#' && (
-                        <a href={project.github} title="GitHub" target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
-                          <i className="fab fa-github" />
-                        </a>
-                      )}
-                      {(project as { demo?: string }).demo && (project as { demo?: string }).demo !== '#' && (
-                        <a href={(project as { demo?: string }).demo} title="Demo" target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
-                          <i className="fas fa-external-link-alt" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                <h3 className={styles.cardTitle}>{p.name}</h3>
+                <p className={styles.cardDesc}>{p.description}</p>
 
-                  <h3 className={styles.cardTitle}>{project.name}</h3>
-                  <p className={styles.cardDesc}>{project.description}</p>
-
-                  <div className={styles.tags}>
-                    {project.tags.map((tag) => (
-                      <span key={tag} className={styles.tag}>{tag}</span>
-                    ))}
-                  </div>
+                <div className={styles.tags}>
+                  {p.tags.map((tag) => (
+                    <span key={tag} className={styles.tag}>{tag}</span>
+                  ))}
                 </div>
-              </div>
-            </article>
-          ))}
+
+                <div className={styles.cardLinks}>
+                  {p.github !== '#' && (
+                    <a href={p.github} target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
+                      → {tr.projects.viewCode}
+                    </a>
+                  )}
+                  {live && (
+                    <a href={p.demo} target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
+                      → {tr.projects.liveDemo}
+                    </a>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

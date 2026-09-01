@@ -10,58 +10,29 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.top}>
-          <span className={styles.logo}>
-            <span className={styles.tag}>&lt;</span>
-            LM
-            <span className={styles.tag}>&nbsp;/&gt;</span>
-          </span>
+          <div className={styles.mark}>
+            <span className={styles.logo}>LM<span className={styles.tag}>-01</span></span>
+            <span className={styles.edition}>EDIÇÃO {year} · REV. A</span>
+          </div>
           <div className={styles.socials}>
-            <a
-              href="https://instagram.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.social}
-              aria-label="Instagram"
-            >
+            <a href="https://www.instagram.com/oluigilucio/" target="_blank" rel="noopener noreferrer" className={styles.social} aria-label="Instagram">
               <i className="fab fa-instagram" />
             </a>
-            <a
-              href="https://youtube.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.social}
-              aria-label="YouTube"
-            >
+            <a href="https://youtube.com/@oluigimello" target="_blank" rel="noopener noreferrer" className={styles.social} aria-label="YouTube">
               <i className="fab fa-youtube" />
             </a>
-            <a
-              href="https://wa.me/5500000000000"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.social}
-              aria-label="WhatsApp"
-            >
+            <a href="https://wa.me/5541992096564" target="_blank" rel="noopener noreferrer" className={styles.social} aria-label="WhatsApp">
               <i className="fab fa-whatsapp" />
             </a>
-            <a
-              href="https://github.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.social}
-              aria-label="GitHub"
-            >
+            <a href="https://github.com/LuigiMello" target="_blank" rel="noopener noreferrer" className={styles.social} aria-label="GitHub">
               <i className="fab fa-github" />
             </a>
           </div>
         </div>
         <div className={styles.divider} />
-        <p className={styles.copy}>
-          {tr.footer.made}{' '}
-          <span className={styles.name}>Luigi Mello</span>
-          {' · '}
-          <span className={styles.accent}>© {year}</span>
-          {' · '}
-          {tr.footer.rights}
+        <p className={styles.colophon}>
+          {tr.footer.made} <span className={styles.name}>Luigi Mello</span>
+          {' · '}© {year} · {tr.footer.rights}
         </p>
       </div>
     </footer>

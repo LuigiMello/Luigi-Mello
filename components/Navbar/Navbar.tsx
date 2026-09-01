@@ -59,9 +59,7 @@ export default function Navbar() {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <nav className={styles.nav}>
         <button className={styles.logo} onClick={() => scrollTo('home')}>
-          <span className={styles.logoTag}>&lt;</span>
-          LM
-          <span className={styles.logoTag}>&nbsp;/&gt;</span>
+          LM<span className={styles.logoTag}>-01</span>
         </button>
 
         <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ''}`}>

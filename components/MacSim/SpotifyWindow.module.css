@@ -1,0 +1,340 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px 20px 90px;
+  z-index: 9;
+}
+
+.window {
+  width: 100%;
+  max-width: 1040px;
+  height: 100%;
+  max-height: 720px;
+  display: flex;
+  flex-direction: column;
+  background: #0d0d0d;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  animation: pop 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  font-family: 'Archivo', 'Helvetica Neue', sans-serif;
+  color: #fff;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.94) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.titleBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+  background: #161616;
+}
+
+.traffic { display: flex; align-items: center; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; border: none; padding: 0; }
+.red { background: #ff5f57; }
+.yellow { background: #febc2e; }
+.green { background: #28c840; }
+
+.title {
+  font-size: 0.76rem;
+  color: #b3b3b3;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #000;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.brandDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1ed760;
+  box-shadow: 0 0 10px rgba(30, 215, 96, 0.8);
+}
+
+.playlistBtn {
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: transparent;
+  color: #b3b3b3;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.playlistBtn:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+
+.playlistBtnActive {
+  color: #fff;
+  background: rgba(30, 215, 96, 0.14);
+}
+
+.sidebarNote {
+  margin-top: auto;
+  font-size: 0.72rem;
+  color: #6a6a6a;
+  line-height: 1.5;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 20px 20px;
+}
+
+.trackList {
+  display: flex;
+  flex-direction: column;
+}
+
+.trackRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 10px;
+  border-radius: 6px;
+  background: transparent;
+  text-align: left;
+}
+
+.trackRow:hover { background: rgba(255, 255, 255, 0.06); }
+
+.trackRowActive {
+  background: rgba(30, 215, 96, 0.1);
+}
+
+.trackArt {
+  width: 42px;
+  height: 42px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.eq i {
+  width: 3px;
+  background: #fff;
+  border-radius: 1px;
+  animation: eqBounce 0.8s ease-in-out infinite;
+}
+
+.eq i:nth-child(1) { height: 6px; animation-delay: 0s; }
+.eq i:nth-child(2) { height: 14px; animation-delay: 0.2s; }
+.eq i:nth-child(3) { height: 9px; animation-delay: 0.4s; }
+
+@keyframes eqBounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50%      { transform: scaleY(1); }
+}
+
+.trackInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trackTitle {
+  font-size: 0.86rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackRowActive .trackTitle { color: #1ed760; }
+
+.trackSubtitle {
+  font-size: 0.74rem;
+  color: #a0a0a0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackGenre {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  color: #1ed760;
+  background: rgba(30, 215, 96, 0.1);
+  border: 1px solid rgba(30, 215, 96, 0.25);
+  padding: 3px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.trackDuration {
+  font-size: 0.74rem;
+  color: #a0a0a0;
+  flex-shrink: 0;
+  width: 40px;
+  text-align: right;
+}
+
+/* ── Now playing bar ── */
+.nowPlaying {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 18px;
+  background: #161616;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.npLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 220px;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.npArt {
+  width: 46px;
+  height: 46px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.npInfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.npTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.npSubtitle {
+  font-size: 0.7rem;
+  color: #a0a0a0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.npCenter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.npControls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.npControls button {
+  background: none;
+  color: #b3b3b3;
+  font-size: 1rem;
+}
+
+.npControls button:hover { color: #fff; }
+
+.playBtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff !important;
+  color: #000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem !important;
+}
+
+.npProgressTrack {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+
+.npProgressFill {
+  height: 100%;
+  background: #1ed760;
+  transition: width 0.2s linear;
+}
+
+.npRight {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.npLink {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #1ed760;
+  border: 1px solid rgba(30, 215, 96, 0.4);
+  padding: 6px 12px;
+  border-radius: 16px;
+}
+
+.npLink:hover { background: rgba(30, 215, 96, 0.14); }
+
+@media (max-width: 700px) {
+  .overlay { padding: 14px 6px 76px; }
+  .sidebar { width: 150px; padding: 14px 10px; }
+  .npLeft, .npRight { width: 120px; }
+  .npTitle, .trackTitle { font-size: 0.76rem; }
+}

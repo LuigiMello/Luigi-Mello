@@ -4,9 +4,13 @@ import styles from './Desktop.module.css';
 import DiscordWindow from './DiscordWindow';
 import BraveWindow from './BraveWindow';
 import GitHubWindow from './GitHubWindow';
+import HackerWindow from './HackerWindow';
+import SpotifyWindow from './SpotifyWindow';
+import VSCodeWindow from './VSCodeWindow';
 import SpaceBackground from './SpaceBackground';
+import Terminal from '@/components/Terminal/Terminal';
 import {
-  DevToolIcon,
+  HackerIcon,
   NotebookIcon,
   TerminalIcon,
   TrashIcon,
@@ -19,13 +23,9 @@ import {
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
-type AppId = 'brave' | 'discord' | 'github' | null;
-
-const idleDockBefore = [{ key: 'spotify', img: `${BASE}/icones/spotify.png`, label: 'Spotify' }];
+type AppId = 'brave' | 'discord' | 'github' | 'hacker' | 'spotify' | 'code' | null;
 
 const idleDockAfter = [
-  { key: 'code', img: `${BASE}/icones/vscode.png`, label: 'VS Code' },
-  { key: 'devtool', Icon: DevToolIcon, label: 'IntelliJ IDEA' },
   { key: 'notebook', Icon: NotebookIcon, label: 'Notas' },
   { key: 'terminal', Icon: TerminalIcon, label: 'Terminal' },
 ];
@@ -87,6 +87,13 @@ export default function Desktop({
       {openApp === 'discord' && <DiscordWindow onClose={() => setOpenApp(null)} />}
       {openApp === 'brave' && <BraveWindow onClose={() => setOpenApp(null)}>{portfolioContent}</BraveWindow>}
       {openApp === 'github' && <GitHubWindow onClose={() => setOpenApp(null)} />}
+      {openApp === 'hacker' && (
+        <HackerWindow onClose={() => setOpenApp(null)}>
+          <Terminal />
+        </HackerWindow>
+      )}
+      {openApp === 'spotify' && <SpotifyWindow onClose={() => setOpenApp(null)} />}
+      {openApp === 'code' && <VSCodeWindow onClose={() => setOpenApp(null)} />}
 
       {/* Dock */}
       <div className={styles.dock}>
@@ -105,16 +112,13 @@ export default function Desktop({
           <img src={`${BASE}/icones/discord.png`} alt="Discord" />
         </button>
 
-        {idleDockBefore.map(({ key, img, label }) => (
-          <button
-            key={key}
-            className={`${styles.dockIcon} ${bounce === key ? styles.bounce : ''}`}
-            onClick={() => bump(key)}
-            title={label}
-          >
-            <img src={img} alt={label} />
-          </button>
-        ))}
+        <button
+          className={`${styles.dockIcon} ${bounce === 'spotify' ? styles.bounce : ''}`}
+          onClick={() => setOpenApp('spotify')}
+          title="Spotify"
+        >
+          <img src={`${BASE}/icones/spotify.png`} alt="Spotify" />
+        </button>
 
         <button
           className={`${styles.dockIcon} ${bounce === 'github' ? styles.bounce : ''}`}
@@ -124,14 +128,29 @@ export default function Desktop({
           <img src={`${BASE}/icones/git.png`} alt="GitHub" />
         </button>
 
-        {idleDockAfter.map(({ key, Icon, img, label }) => (
+        <button
+          className={`${styles.dockIcon} ${bounce === 'code' ? styles.bounce : ''}`}
+          onClick={() => setOpenApp('code')}
+          title="VS Code"
+        >
+          <img src={`${BASE}/icones/vscode.png`} alt="VS Code" />
+        </button>
+        <button
+          className={`${styles.dockIcon} ${bounce === 'hacker' ? styles.bounce : ''}`}
+          onClick={() => setOpenApp('hacker')}
+          title="???"
+        >
+          <HackerIcon />
+        </button>
+
+        {idleDockAfter.map(({ key, Icon, label }) => (
           <button
             key={key}
             className={`${styles.dockIcon} ${bounce === key ? styles.bounce : ''}`}
             onClick={() => bump(key)}
             title={label}
           >
-            {img ? <img src={img} alt={label} /> : Icon && <Icon />}
+            <Icon />
           </button>
         ))}
 

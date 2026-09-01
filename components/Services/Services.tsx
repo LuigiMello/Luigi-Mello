@@ -12,21 +12,16 @@ export default function Services() {
 
   return (
     <section id="services" className={styles.services}>
-      <div className={styles.bgText}>SERVICES</div>
-
       <div className={styles.container}>
         <div className="section-header">
-          <h2 className="section-title">
-            <span>{tr.services.title}</span>
-          </h2>
-          <p className="section-subtitle">{tr.services.subtitle}</p>
+          <span className="chapter-num">04</span>
+          <h2 className="section-title">{tr.services.title}</h2>
+          <span className="section-subtitle">{tr.services.subtitle}</span>
         </div>
 
         <div className={styles.badgeRow}>
-          <span className={styles.badge}>
-            <span className={styles.badgePulse} />
-            {tr.services.badge}
-          </span>
+          <span className={styles.badgeDot} />
+          <span className={styles.badge}>{tr.services.badge}</span>
         </div>
 
         <div
@@ -34,23 +29,10 @@ export default function Services() {
           className={`${styles.grid} ${inView ? styles.visible : ''}`}
         >
           {tr.services.items.map((item, i) => (
-            <div
-              key={item.title}
-              className={styles.card}
-              style={
-                {
-                  '--card-color': item.color,
-                  transitionDelay: `${i * 80}ms`,
-                } as React.CSSProperties
-              }
-            >
+            <div key={item.title} className={styles.card} style={{ transitionDelay: `${i * 70}ms` }}>
               <div className={styles.cardTop}>
-                <div className={styles.iconWrap}>
-                  <i className={item.icon} />
-                </div>
-                <span className={styles.cardNumber}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
+                <span className={styles.modeLabel}>MODO {String(i + 1).padStart(2, '0')}</span>
+                <i className={`${item.icon} ${styles.icon}`} />
               </div>
 
               <h3 className={styles.cardTitle}>{item.title}</h3>
@@ -61,23 +43,14 @@ export default function Services() {
                   <span key={tag} className={styles.tag}>{tag}</span>
                 ))}
               </div>
-
-              <div className={styles.cardGlow} />
-              <div className={styles.cardLine} />
             </div>
           ))}
         </div>
 
         <div className={styles.cta}>
-          <p className={styles.ctaText}>
-            {tr.services.badge} —{' '}
-            <span className={styles.ctaHighlight}>
-              {tr.contact.description}
-            </span>
-          </p>
+          <p className={styles.ctaText}>{tr.contact.description}</p>
           <button className={styles.ctaBtn} onClick={scrollToContact}>
-            {tr.services.ctaLabel}
-            <span className={styles.ctaArrow}>→</span>
+            {tr.services.ctaLabel} →
           </button>
         </div>
       </div>

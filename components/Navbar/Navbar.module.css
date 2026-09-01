@@ -1,4 +1,3 @@
-/* ── Instrument strip navbar — fixed to the top edge, no floating glass pill ── */
 .header {
   position: fixed;
   top: 0;
@@ -7,15 +6,15 @@
   z-index: 1000;
   height: var(--nav-height);
   transition: background 0.3s ease, border-color 0.3s ease;
-  background: rgba(11, 10, 8, 0.72);
+  background: rgba(241, 238, 227, 0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .header.scrolled {
-  background: rgba(11, 10, 8, 0.94);
-  border-bottom-color: var(--accent-border);
+  background: rgba(241, 238, 227, 0.96);
+  border-bottom-color: var(--ink);
 }
 
 .nav {
@@ -29,26 +28,25 @@
   gap: 12px;
 }
 
-/* Logo */
 .logo {
-  background: none;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.05em;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: 0.01em;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-.logo:hover { color: var(--text-highlight); }
+.logo:hover { color: var(--accent); }
 
 .logoTag {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 0.85rem;
 }
 
-/* Nav links */
 .navLinks {
   display: flex;
   align-items: center;
@@ -57,14 +55,15 @@
 
 .navLink {
   position: relative;
-  background: none;
   height: 100%;
-  font-size: 0.78rem;
-  color: var(--text-secondary);
+  font-size: 0.76rem;
+  color: var(--ink-faint);
   padding: 0 14px;
   transition: color 0.2s;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-family: var(--font-display);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -72,7 +71,7 @@
 }
 
 .navLink:hover {
-  color: var(--text-highlight);
+  color: var(--ink);
 }
 
 .activeLink {
@@ -82,12 +81,10 @@
 
 .linkNumber {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--accent);
-  opacity: 0.65;
+  font-size: 0.62rem;
+  color: var(--ink-faint);
 }
 
-/* Actions */
 .actions {
   display: flex;
   align-items: center;
@@ -96,29 +93,27 @@
 }
 
 .langBtn {
-  background: none;
-  border: 1px solid var(--accent-border);
-  color: var(--accent);
-  font-size: 0.72rem;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-soft);
+  font-size: 0.68rem;
   font-weight: 700;
-  padding: 6px 11px;
+  padding: 6px 10px;
   font-family: var(--font-mono);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   transition: all 0.2s;
   white-space: nowrap;
 }
 
 .langBtn:hover {
-  background: var(--accent);
-  color: var(--bg-primary);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
-/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;
   gap: 5px;
-  background: none;
   padding: 6px;
 }
 
@@ -126,7 +121,7 @@
   display: block;
   width: 20px;
   height: 2px;
-  background: var(--accent);
+  background: var(--ink);
   transition: all 0.3s ease;
   transform-origin: center;
 }
@@ -135,7 +130,6 @@
 .hamburgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburgerOpen span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile */
 @media (max-width: 768px) {
   .hamburger { display: flex; }
 
@@ -145,11 +139,11 @@
     left: 0;
     right: 0;
     height: auto;
-    background: rgba(11, 10, 8, 0.98);
+    background: rgba(241, 238, 227, 0.98);
     flex-direction: column;
     align-items: stretch;
     padding: 4px 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--line);
     transform: translateY(-8px);
     opacity: 0;
     pointer-events: none;
@@ -165,7 +159,7 @@
   .navLink {
     width: 100%;
     padding: 14px 20px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     height: auto;
     border-bottom: none;
     border-left: 2px solid transparent;

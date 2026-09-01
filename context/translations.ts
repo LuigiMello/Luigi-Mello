@@ -37,14 +37,14 @@ export const translations = {
       },
     },
     about: {
-      title: 'Sobre Mim',
-      subtitle: 'Conheça um pouco da minha história',
+      title: 'Especificações',
+      subtitle: 'ficha técnica',
       p1: 'Sou Luigi Mello, desenvolvedor apaixonado por tecnologia com experiência em desenvolvimento web Full Stack. Acredito que o bom código vai além de funcionar — ele deve ser limpo, eficiente e escalável.',
       p2: 'Trabalho com as principais tecnologias do mercado, tanto no frontend quanto no backend, sempre buscando as melhores práticas de desenvolvimento. Sou curioso por natureza e adoro explorar novos frameworks e ferramentas.',
       p3: 'Além disso, possuo um bom domínio do inglês, o que me permite colaborar com equipes internacionais, consumir conteúdo técnico no idioma original e expandir minhas oportunidades profissionais.',
       englishBadge: '🇺🇸 Inglês Avançado',
       englishDesc:
-        'Comunicação fluente em inglês — leitura de documentações técnicas, colaboração com times internacionais e consumo de conteúdo no idioma original.',
+        'Nível avançado em inglês — leitura de documentações técnicas, colaboração com times internacionais e consumo de conteúdo no idioma original.',
       stats: {
         projects: 'Projetos',
         technologies: 'Tecnologias',
@@ -52,8 +52,8 @@ export const translations = {
       },
     },
     skills: {
-      title: 'Skills',
-      subtitle: 'Tecnologias e ferramentas que domino',
+      title: 'Componentes',
+      subtitle: 'lista de peças',
       filterAll: 'Todos',
       categories: {
         all: 'Todos',
@@ -66,8 +66,8 @@ export const translations = {
       },
     },
     projects: {
-      title: 'Projetos',
-      subtitle: 'Alguns dos meus trabalhos',
+      title: 'Registro de Operação',
+      subtitle: 'testes de campo',
       viewCode: 'Ver Código',
       liveDemo: 'Ver Site',
       comingSoon: 'Em breve — fique ligado!',
@@ -122,8 +122,8 @@ export const translations = {
       ],
     },
     services: {
-      title: 'Serviços',
-      subtitle: 'O que posso fazer por você',
+      title: 'Modos de Operação',
+      subtitle: 'como posso ajudar',
       badge: 'Disponível para Freelance & CLT',
       ctaLabel: 'Solicitar orçamento',
       items: [
@@ -172,10 +172,10 @@ export const translations = {
       ],
     },
     contact: {
-      title: 'Contato',
-      subtitle: 'Vamos trabalhar juntos?',
+      title: 'Suporte & Garantia',
+      subtitle: 'vamos trabalhar juntos?',
       description:
-        'Estou disponível para novos projetos, colaborações e oportunidades. Escolha a melhor forma de me contatar!',
+        'Estou disponível para novos projetos, colaborações e oportunidades. Escolha o canal de suporte que preferir.',
       instagramLabel: 'Instagram',
       instagramDesc: '@oluigilucio — Me siga',
       youtubeLabel: 'YouTube',
@@ -184,6 +184,8 @@ export const translations = {
       whatsappDesc: '(41) 99209-6564 — Vamos conversar',
       linkedinLabel: 'LinkedIn',
       linkedinDesc: 'luigimello — Conecte-se comigo',
+      emailCta: 'Abrir chamado — email',
+      warranty: 'Garantia\nVitalícia',
     },
     footer: {
       rights: 'Todos os direitos reservados.',
@@ -228,8 +230,8 @@ export const translations = {
       },
     },
     about: {
-      title: 'About Me',
-      subtitle: 'Get to know a bit of my story',
+      title: 'Specifications',
+      subtitle: 'technical data sheet',
       p1: "I'm Luigi Mello, a developer passionate about technology with experience in Full Stack web development. I believe that good code goes beyond working — it should be clean, efficient, and scalable.",
       p2: 'I work with the main technologies on the market, both in the frontend and backend, always following best development practices. I am naturally curious and love exploring new frameworks and tools.',
       p3: 'Additionally, I have good English proficiency, which allows me to collaborate with international teams, consume technical content in its original language, and expand my professional opportunities.',
@@ -243,8 +245,8 @@ export const translations = {
       },
     },
     skills: {
-      title: 'Skills',
-      subtitle: 'Technologies and tools I master',
+      title: 'Components',
+      subtitle: 'parts list',
       filterAll: 'All',
       categories: {
         all: 'All',
@@ -257,8 +259,8 @@ export const translations = {
       },
     },
     projects: {
-      title: 'Projects',
-      subtitle: 'Some of my work',
+      title: 'Operation Log',
+      subtitle: 'field tests',
       viewCode: 'View Code',
       liveDemo: 'Demo',
       comingSoon: 'Coming soon — stay tuned!',
@@ -313,8 +315,8 @@ export const translations = {
       ],
     },
     services: {
-      title: 'Services',
-      subtitle: 'What I can do for you',
+      title: 'Operating Modes',
+      subtitle: 'how I can help',
       badge: 'Available for Freelance & Full-time',
       ctaLabel: 'Request a quote',
       items: [
@@ -363,10 +365,10 @@ export const translations = {
       ],
     },
     contact: {
-      title: 'Contact',
-      subtitle: "Let's work together?",
+      title: 'Support & Warranty',
+      subtitle: "let's work together?",
       description:
-        'I am available for new projects, collaborations, and opportunities. Choose the best way to reach me!',
+        'I am available for new projects, collaborations, and opportunities. Choose whichever support channel you prefer.',
       instagramLabel: 'Instagram',
       instagramDesc: '@oluigilucio — Follow me',
       youtubeLabel: 'YouTube',
@@ -375,6 +377,8 @@ export const translations = {
       whatsappDesc: '(41) 99209-6564 — Let\'s talk',
       linkedinLabel: 'LinkedIn',
       linkedinDesc: 'luigimello — Connect with me',
+      emailCta: 'Open a ticket — email',
+      warranty: 'Lifetime\nWarranty',
     },
     footer: {
       rights: 'All rights reserved.',

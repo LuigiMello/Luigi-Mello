@@ -42,31 +42,24 @@ export default function Hero() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section id="home" className={styles.hero}>
-      {/* Three.js scene — fills entire hero */}
+    <section id="home" className={`${styles.hero} ${mounted ? styles.ready : ''}`}>
+      <div className={styles.plate}>
+        <span>MODELO — LM&#8209;01</span>
+        <span>REV. 2026</span>
+      </div>
+
       <div className={styles.threeWrap}>
         <ThreeHero />
       </div>
 
-      {/* Glows */}
-      <div className={styles.glow1} />
-      <div className={styles.glow2} />
-
-      {/* Badge — small rectangle at top */}
-      <div className={`${styles.heroBadge} ${mounted ? styles.heroBadgeVisible : ''}`}>
-        <span className={styles.badgeDot} />
-        {tr.hero.greeting}
-      </div>
-
-      {/* Main content — sits below 3D text area */}
-      <div className={`${styles.content} ${mounted ? styles.visible : ''}`}>
-        {/* Spacer: 3D "Luigi Mello" occupies this vertical space */}
+      <div className={styles.content}>
         <div className={styles.nameSpacer} aria-hidden="true" />
 
         <div className={styles.roleRow}>
-          <span className={styles.roleSlash}>&#47;&#47;&nbsp;</span>
+          <span className={styles.roleBracket}>[</span>
           <span className={styles.roleText}>{displayText}</span>
           <span className={styles.cursor}>_</span>
+          <span className={styles.roleBracket}>]</span>
         </div>
 
         <p className={styles.description}>{tr.hero.description}</p>
@@ -74,34 +67,31 @@ export default function Hero() {
         <div className={styles.ctas}>
           <button className={styles.btnPrimary} onClick={() => scrollTo('projects')}>
             {tr.hero.ctaProjects}
-            <span className={styles.btnIcon}>↗</span>
           </button>
           <button className={styles.btnGhost} onClick={() => scrollTo('contact')}>
             {tr.hero.ctaContact}
           </button>
         </div>
 
-        <div className={styles.statsRow}>
-          <div className={styles.stat}>
-            <span className={styles.statNum}>10<span className={styles.statPlus}>+</span></span>
-            <span className={styles.statLbl}>{tr.about.stats.technologies}</span>
+        <div className={styles.specRow}>
+          <div className={styles.spec}>
+            <span className={styles.specVal}>10+</span>
+            <span className={styles.specLbl}>{tr.about.stats.technologies}</span>
           </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <span className={styles.statNum}>3<span className={styles.statPlus}>+</span></span>
-            <span className={styles.statLbl}>{tr.about.stats.projects}</span>
+          <div className={styles.spec}>
+            <span className={styles.specVal}>3+</span>
+            <span className={styles.specLbl}>{tr.about.stats.projects}</span>
           </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <span className={styles.statNum}>5</span>
-            <span className={styles.statLbl}>{tr.about.stats.aiTools}</span>
+          <div className={styles.spec}>
+            <span className={styles.specVal}>5</span>
+            <span className={styles.specLbl}>{tr.about.stats.aiTools}</span>
           </div>
         </div>
       </div>
 
       <button className={styles.scrollBtn} onClick={() => scrollTo('about')}>
         <span className={styles.scrollLine} />
-        <span className={styles.scrollText}>scroll</span>
+        <span className={styles.scrollText}>fig. 01 — role para continuar</span>
       </button>
     </section>
   );

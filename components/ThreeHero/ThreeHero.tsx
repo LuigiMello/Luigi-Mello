@@ -33,17 +33,17 @@ export default function ThreeHero() {
       const camera = new THREE.PerspectiveCamera(52, W / H, 0.1, 200);
       camera.position.set(0, 0, 9);
 
-      /* ── Lights ── */
-      scene.add(new THREE.AmbientLight(0xffffff, 1.8));
-      const pl1 = new THREE.PointLight(0xffab2e, 160, 40);
+      /* ── Lights — warm & neutral, tuned for a light paper backdrop ── */
+      scene.add(new THREE.AmbientLight(0xfff8ea, 1.5));
+      const pl1 = new THREE.PointLight(0xfff1d8, 90, 40);
       pl1.position.set(-4, 6, 8); scene.add(pl1);
-      const pl2 = new THREE.PointLight(0x4ce583, 60, 30);
+      const pl2 = new THREE.PointLight(0xd3401d, 40, 30);
       pl2.position.set(5, -2, 5); scene.add(pl2);
-      const pl3 = new THREE.PointLight(0xffffff, 40, 20);
+      const pl3 = new THREE.PointLight(0xffffff, 30, 20);
       pl3.position.set(0, 0, 10); scene.add(pl3);
 
-      /* ── Particles (stars) ── */
-      const CNT  = 3800;
+      /* ── Particles — sparse ink measurement dots, not a starfield ── */
+      const CNT  = 650;
       const pPos = new Float32Array(CNT * 3);
       const pCol = new Float32Array(CNT * 3);
       for (let i = 0; i < CNT; i++) {
@@ -53,14 +53,14 @@ export default function ThreeHero() {
         pPos[i*3]   = r * Math.sin(p) * Math.cos(t);
         pPos[i*3+1] = r * Math.sin(p) * Math.sin(t);
         pPos[i*3+2] = r * Math.cos(p);
-        const bright = 0.5 + Math.random() * 0.5;
-        pCol[i*3] = bright; pCol[i*3+1] = bright * 0.82; pCol[i*3+2] = bright * 0.5;
+        const shade = 0.08 + Math.random() * 0.12;
+        pCol[i*3] = shade; pCol[i*3+1] = shade * 0.92; pCol[i*3+2] = shade * 0.78;
       }
       const pGeo = new THREE.BufferGeometry();
       pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
       pGeo.setAttribute('color',    new THREE.BufferAttribute(pCol, 3));
       const stars = new THREE.Points(pGeo, new THREE.PointsMaterial({
-        size: 0.055, vertexColors: true, transparent: true, opacity: 0.75, sizeAttenuation: true,
+        size: 0.05, vertexColors: true, transparent: true, opacity: 0.5, sizeAttenuation: true,
       }));
       scene.add(stars);
 
@@ -87,21 +87,21 @@ export default function ThreeHero() {
         return new THREE.Mesh(geo, mat);
       };
 
-      /* "Luigi" — glossy amber */
+      /* "Luigi" — glossy lacquered ink */
       const luigi = makeMesh('Luigi', 1.1, new THREE.MeshPhongMaterial({
-        color:    new THREE.Color(0xffab2e),
-        emissive: new THREE.Color(0x4d2f00),
-        specular: new THREE.Color(0xffffff),
-        shininess: 220,
+        color:    new THREE.Color(0x18150f),
+        emissive: new THREE.Color(0x050402),
+        specular: new THREE.Color(0xffe9c4),
+        shininess: 180,
       }));
       luigi.position.set(0, 1.55, 0);   /* mais alto */
 
-      /* "Mello" — polished warm-silver */
+      /* "Mello" — glossy signal red */
       const mello = makeMesh('Mello', 1.1, new THREE.MeshPhongMaterial({
-        color:    new THREE.Color(0xf6f0e4),
-        emissive: new THREE.Color(0x1a1712),
+        color:    new THREE.Color(0xd3401d),
+        emissive: new THREE.Color(0x3a0f05),
         specular: new THREE.Color(0xffffff),
-        shininess: 260,
+        shininess: 200,
       }));
       mello.position.set(0, 0.05, 0);   /* mais alto também */
 
