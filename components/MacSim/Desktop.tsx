@@ -40,7 +40,7 @@ export default function Desktop({
   onLock,
   portfolioContent,
 }: {
-  now: Date;
+  now: Date | null;
   onLock: () => void;
   portfolioContent: React.ReactNode;
 }) {
@@ -52,10 +52,14 @@ export default function Desktop({
     setTimeout(() => setBounce(null), 500);
   };
 
+  // Desktop only mounts after the lock/login screens, well after the
+  // client-side effect in MacSim has set a real Date — this fallback just
+  // keeps the types honest without ever actually being hit.
+  const clock = now ?? new Date();
   const menuDate = capitalize(
-    now.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }).replace('.', '')
+    clock.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }).replace('.', '')
   );
-  const menuTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const menuTime = clock.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
   return (
     <div className={styles.desktop}>

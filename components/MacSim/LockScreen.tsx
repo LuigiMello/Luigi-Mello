@@ -10,13 +10,13 @@ export default function LockScreen({
   now,
   onAdvance,
 }: {
-  now: Date;
+  now: Date | null;
   onAdvance: () => void;
 }) {
-  const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-  const date = capitalize(
-    now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })
-  );
+  const time = now ? now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '';
+  const date = now
+    ? capitalize(now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' }))
+    : '';
 
   return (
     <button className={styles.lock} onClick={onAdvance} aria-label="Entrar">

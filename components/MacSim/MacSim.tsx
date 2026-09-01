@@ -9,9 +9,13 @@ type Stage = 'lock' | 'login' | 'desktop';
 
 export default function MacSim({ children }: { children: React.ReactNode }) {
   const [stage, setStage] = useState<Stage>('lock');
-  const [now, setNow] = useState(new Date());
+  // Starts null so server and client render the same thing on first paint —
+  // `new Date()` differs between build time (static export) and the
+  // visitor's clock, which was throwing React hydration-mismatch errors.
+  const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
+    setNow(new Date());
     const id = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
