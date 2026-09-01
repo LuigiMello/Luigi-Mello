@@ -124,6 +124,9 @@
   overflow: hidden;
   transform: translateZ(0);
   background: var(--bg-primary, #050e1f);
+  /* Lets embedded sections size themselves off this frame's real box
+     instead of the page's actual (much taller) viewport — see Hero.module.css. */
+  container-type: size;
 }
 
 @media (max-width: 700px) {

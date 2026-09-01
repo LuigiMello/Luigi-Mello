@@ -129,7 +129,7 @@ export default function Skills() {
       <div className={styles.container}>
         <div className="section-header">
           <h2 className="section-title"><span>{tr.skills.title}</span></h2>
-          <p className="section-subtitle">// {tr.skills.subtitle}</p>
+          <p className="section-subtitle">{tr.skills.subtitle}</p>
         </div>
 
         {/* Filter tabs */}

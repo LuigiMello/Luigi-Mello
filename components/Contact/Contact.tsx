@@ -19,7 +19,7 @@ export default function Contact() {
       <div className={styles.container}>
         <div className="section-header">
           <h2 className="section-title"><span>{tr.contact.title}</span></h2>
-          <p className="section-subtitle">// {tr.contact.subtitle}</p>
+          <p className="section-subtitle">{tr.contact.subtitle}</p>
         </div>
 
         <div

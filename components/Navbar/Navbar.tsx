@@ -1,21 +1,29 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useScrollContainer } from '@/context/ScrollContainerContext';
 import styles from './Navbar.module.css';
 
 const navIds = ['home', 'about', 'skills', 'projects', 'services', 'contact'] as const;
 
 export default function Navbar() {
   const { tr, toggleLang, lang } = useLanguage();
+  const scroller = useScrollContainer();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState('home');
 
+  // The embedded Brave window scrolls its own bounded element, not `window` —
+  // without this, the navbar never learns it's scrolled and stays see-through
+  // over content instead of picking up its solid backdrop.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const target: HTMLElement | Window = scroller ?? window;
+    const getY = () => (scroller ? scroller.scrollTop : window.scrollY);
+    const onScroll = () => setScrolled(getY() > 20);
+    onScroll();
+    target.addEventListener('scroll', onScroll);
+    return () => target.removeEventListener('scroll', onScroll);
+  }, [scroller]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -24,14 +32,14 @@ export default function Navbar() {
           if (e.isIntersecting) setActive(e.target.id);
         });
       },
-      { rootMargin: '-40% 0px -55% 0px' }
+      { root: scroller ?? null, rootMargin: '-40% 0px -55% 0px' }
     );
     navIds.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [scroller]);
 
   const navLinks = [
     { id: 'home',     label: tr.nav.home     },

@@ -36,7 +36,7 @@
 .social {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--bg-card);
   display: flex;
@@ -51,7 +51,6 @@
   color: var(--accent);
   border-color: var(--accent-border);
   transform: translateY(-3px);
-  box-shadow: var(--shadow-accent);
 }
 
 .divider {

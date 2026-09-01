@@ -1,24 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --bg-primary: #050e1f;
-  --bg-secondary: #071428;
-  --bg-card: #0b1f3a;
-  --bg-card-hover: #0f2850;
-  --accent: #00d0ff;
-  --accent-dim: rgba(0, 208, 255, 0.08);
-  --accent-border: rgba(0, 208, 255, 0.3);
-  --text-primary: #b8d4f0;
-  --text-secondary: #6a8ab0;
-  --text-highlight: #e0efff;
-  --border: #102040;
-  --nav-height: 70px;
+  --bg-primary: #0b0a08;
+  --bg-secondary: #131210;
+  --bg-card: #191713;
+  --bg-card-hover: #211e18;
+  --accent: #ffab2e;
+  --accent-dim: rgba(255, 171, 46, 0.08);
+  --accent-border: rgba(255, 171, 46, 0.28);
+  --accent-2: #4ce583;
+  --accent-2-dim: rgba(76, 229, 131, 0.1);
+  --text-primary: #d9d5c9;
+  --text-secondary: #8c8879;
+  --text-highlight: #f6f3e8;
+  --border: #2a2822;
+  --nav-height: 60px;
   --font-mono: 'Fira Code', monospace;
   --font-sans: 'Inter', sans-serif;
-  --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  --shadow-accent: 0 0 28px rgba(0, 208, 255, 0.25);
-  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.5);
-  --radius: 12px;
+  --font-display: 'Barlow Condensed', 'Inter', sans-serif;
+  --transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+  --shadow-card: 0 2px 0 rgba(0, 0, 0, 0.4);
+  --radius: 3px;
 }
 
 *,
@@ -42,14 +44,18 @@ body {
   overflow-x: hidden;
 }
 
+/* faint scanline texture — instrument-panel surface, not a SaaS blueprint grid */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(0, 208, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 208, 255, 0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(255, 171, 46, 0.025) 0px,
+    rgba(255, 171, 46, 0.025) 1px,
+    transparent 1px,
+    transparent 4px
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -107,24 +113,32 @@ section {
   transform: translateY(0);
 }
 
+/* ── Section header: instrument-panel readout, not centered hero-style ── */
 .section-header {
-  text-align: center;
-  margin-bottom: 60px;
+  text-align: left;
+  margin-bottom: 52px;
+  padding-left: 18px;
+  border-left: 2px solid var(--accent);
+  max-width: 640px;
 }
 
 .section-title {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--text-highlight);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  line-height: 1.05;
 }
 
 .section-title span {
-  color: var(--accent);
+  color: var(--text-highlight);
 }
 
 .section-subtitle {
-  font-size: 1.1rem;
+  font-size: 0.92rem;
   color: var(--text-secondary);
   font-family: var(--font-mono);
 }

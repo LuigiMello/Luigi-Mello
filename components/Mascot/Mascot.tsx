@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
+import { useScrollContainer } from '@/context/ScrollContainerContext';
 import styles from './Mascot.module.css';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -15,27 +16,27 @@ const MESSAGES: Record<string, string> = {
 
 const SECTION_IDS = ['about', 'skills', 'projects', 'services', 'contact'];
 
-function getActiveSection(): string | null {
-  const scroll = window.scrollY;
-  const vh     = window.innerHeight;
+function getActiveSection(scroll: number, vh: number): string | null {
   let best: string | null = null;
   let bestScore = -Infinity;
 
   for (const id of SECTION_IDS) {
     const el = document.getElementById(id);
     if (!el) continue;
-    /* Use offsetTop (layout pos) + scrollY — works with GSAP ScrollSmoother */
+    /* Use offsetTop (layout pos) + scroll — works with GSAP ScrollSmoother
+       and with the embedded Brave window's own bounded scroll element. */
     const top    = el.offsetTop - scroll;
     const bottom = top + el.offsetHeight;
     const visible = Math.min(bottom, vh) - Math.max(top, 0);
     if (visible > bestScore) { bestScore = visible; best = id; }
   }
 
-  /* only activate when at least 25% of viewport is the section */
+  /* only activate when at least 25% of the viewport is the section */
   return bestScore > vh * 0.25 ? best : null;
 }
 
 export default function Mascot() {
+  const scroller = useScrollContainer();
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [displayedMsg, setDisplayedMsg]   = useState('');
   const [bubbleKey, setBubbleKey]         = useState(0);
@@ -44,19 +45,19 @@ export default function Mascot() {
   const rafRef    = useRef<number>(0);
 
   useEffect(() => {
-    console.log('[Mascot] useEffect mounted');
-    /* Poll via rAF — works with ScrollSmoother's transform-based scrolling */
-    let frameCount = 0;
+    /* Poll via rAF — works with ScrollSmoother's transform-based scrolling
+       and with the embedded window's bounded, independently-scrolling frame. */
     const tick = () => {
-      frameCount++;
-      if (frameCount % 120 === 0) console.log('[Mascot] tick', frameCount, 'scrollY', window.scrollY);
-      const section = getActiveSection();
-      const heroEl = document.getElementById('home');
-      const heroTop  = heroEl ? heroEl.offsetTop - window.scrollY : -9999;
-      const heroBot  = heroEl ? heroTop + heroEl.offsetHeight : -9999;
-      const heroVis  = Math.min(heroBot, window.innerHeight) - Math.max(heroTop, 0);
+      const scrollTop = scroller ? scroller.scrollTop : window.scrollY;
+      const viewportH = scroller ? scroller.clientHeight : window.innerHeight;
 
-      if (heroVis > window.innerHeight * 0.5) {
+      const section = getActiveSection(scrollTop, viewportH);
+      const heroEl = document.getElementById('home');
+      const heroTop  = heroEl ? heroEl.offsetTop - scrollTop : -9999;
+      const heroBot  = heroEl ? heroTop + heroEl.offsetHeight : -9999;
+      const heroVis  = Math.min(heroBot, viewportH) - Math.max(heroTop, 0);
+
+      if (heroVis > viewportH * 0.5) {
         /* Hero is dominant — hide mascot */
         setShow(false);
       } else if (section) {
@@ -74,7 +75,7 @@ export default function Mascot() {
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, []);
+  }, [scroller]);
 
   /* Typewriter when activeSection / bubbleKey changes */
   useEffect(() => {

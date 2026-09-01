@@ -35,9 +35,9 @@ export default function ThreeHero() {
 
       /* ── Lights ── */
       scene.add(new THREE.AmbientLight(0xffffff, 1.8));
-      const pl1 = new THREE.PointLight(0x00d0ff, 160, 40);
+      const pl1 = new THREE.PointLight(0xffab2e, 160, 40);
       pl1.position.set(-4, 6, 8); scene.add(pl1);
-      const pl2 = new THREE.PointLight(0x7b2ff7, 60, 30);
+      const pl2 = new THREE.PointLight(0x4ce583, 60, 30);
       pl2.position.set(5, -2, 5); scene.add(pl2);
       const pl3 = new THREE.PointLight(0xffffff, 40, 20);
       pl3.position.set(0, 0, 10); scene.add(pl3);
@@ -54,7 +54,7 @@ export default function ThreeHero() {
         pPos[i*3+1] = r * Math.sin(p) * Math.sin(t);
         pPos[i*3+2] = r * Math.cos(p);
         const bright = 0.5 + Math.random() * 0.5;
-        pCol[i*3] = bright * 0.3; pCol[i*3+1] = bright * 0.7; pCol[i*3+2] = bright;
+        pCol[i*3] = bright; pCol[i*3+1] = bright * 0.82; pCol[i*3+2] = bright * 0.5;
       }
       const pGeo = new THREE.BufferGeometry();
       pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
@@ -87,19 +87,19 @@ export default function ThreeHero() {
         return new THREE.Mesh(geo, mat);
       };
 
-      /* "Luigi" — glossy cyan */
+      /* "Luigi" — glossy amber */
       const luigi = makeMesh('Luigi', 1.1, new THREE.MeshPhongMaterial({
-        color:    new THREE.Color(0x00c8f0),
-        emissive: new THREE.Color(0x004466),
+        color:    new THREE.Color(0xffab2e),
+        emissive: new THREE.Color(0x4d2f00),
         specular: new THREE.Color(0xffffff),
         shininess: 220,
       }));
       luigi.position.set(0, 1.55, 0);   /* mais alto */
 
-      /* "Mello" — polished white-silver */
+      /* "Mello" — polished warm-silver */
       const mello = makeMesh('Mello', 1.1, new THREE.MeshPhongMaterial({
-        color:    new THREE.Color(0xeef6ff),
-        emissive: new THREE.Color(0x0d1f35),
+        color:    new THREE.Color(0xf6f0e4),
+        emissive: new THREE.Color(0x1a1712),
         specular: new THREE.Color(0xffffff),
         shininess: 260,
       }));

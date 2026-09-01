@@ -14,7 +14,7 @@
   font-size: clamp(5rem, 16vw, 13rem);
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(0, 208, 255, 0.04);
+  -webkit-text-stroke: 1px rgba(255, 171, 46, 0.04);
   letter-spacing: 0.12em;
   pointer-events: none;
   white-space: nowrap;
@@ -40,14 +40,14 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(0, 208, 255, 0.06);
-  border: 1px solid rgba(0, 208, 255, 0.25);
+  background: rgba(255, 171, 46, 0.06);
+  border: 1px solid rgba(255, 171, 46, 0.25);
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 600;
   padding: 10px 22px;
-  border-radius: 50px;
+  border-radius: var(--radius);
   letter-spacing: 0.06em;
 }
 
@@ -55,8 +55,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #27c93f;
-  box-shadow: 0 0 10px #27c93f;
+  background: var(--accent-2);
+  box-shadow: 0 0 8px var(--accent-2);
   animation: pulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
@@ -147,7 +147,7 @@
 .iconWrap {
   width: 52px;
   height: 52px;
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: color-mix(in srgb, var(--card-color, var(--accent)) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--card-color, var(--accent)) 25%, transparent);
   display: flex;
@@ -231,7 +231,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(0,208,255,0.04) 0%, rgba(123,47,247,0.04) 100%);
+  background: linear-gradient(90deg, rgba(255, 171, 46,0.04) 0%, rgba(76, 229, 131,0.04) 100%);
   pointer-events: none;
 }
 
@@ -240,7 +240,7 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), #7b2ff7);
+  background: linear-gradient(90deg, var(--accent), #4ce583);
 }
 
 .ctaText {
@@ -259,11 +259,11 @@
   align-items: center;
   gap: 10px;
   background: var(--accent);
-  color: #050e1f;
+  color: var(--bg-primary);
   font-weight: 800;
   font-size: 0.9rem;
   padding: 14px 28px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   white-space: nowrap;
   transition: var(--transition);
   letter-spacing: 0.04em;
@@ -271,9 +271,8 @@
 }
 
 .ctaBtn:hover {
-  background: #33daff;
+  background: var(--text-highlight);
   transform: translateY(-2px);
-  box-shadow: 0 0 28px rgba(0, 208, 255, 0.45);
 }
 
 .ctaArrow {

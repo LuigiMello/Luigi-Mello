@@ -18,7 +18,7 @@ export default function Projects() {
             {tr.projects.title.split(' ')[0]}{' '}
             <span>{tr.projects.title.split(' ').slice(1).join(' ')}</span>
           </h2>
-          <p className="section-subtitle">// {tr.projects.subtitle}</p>
+          <p className="section-subtitle">{tr.projects.subtitle}</p>
         </div>
 
         <div

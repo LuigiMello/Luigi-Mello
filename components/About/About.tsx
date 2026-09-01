@@ -25,7 +25,7 @@ export default function About() {
             {tr.about.title.split(' ')[0]}{' '}
             <span>{tr.about.title.split(' ').slice(1).join(' ')}</span>
           </h2>
-          <p className="section-subtitle">// {tr.about.subtitle}</p>
+          <p className="section-subtitle">{tr.about.subtitle}</p>
         </div>
 
         <div

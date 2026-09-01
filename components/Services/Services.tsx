@@ -19,7 +19,7 @@ export default function Services() {
           <h2 className="section-title">
             <span>{tr.services.title}</span>
           </h2>
-          <p className="section-subtitle">// {tr.services.subtitle}</p>
+          <p className="section-subtitle">{tr.services.subtitle}</p>
         </div>
 
         <div className={styles.badgeRow}>
