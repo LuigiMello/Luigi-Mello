@@ -3,6 +3,8 @@ import { useState } from 'react';
 import styles from './Desktop.module.css';
 import DiscordWindow from './DiscordWindow';
 import BraveWindow from './BraveWindow';
+import GitHubWindow from './GitHubWindow';
+import SpaceBackground from './SpaceBackground';
 import {
   DevToolIcon,
   NotebookIcon,
@@ -17,11 +19,11 @@ import {
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
-type AppId = 'brave' | 'discord' | null;
+type AppId = 'brave' | 'discord' | 'github' | null;
 
-const idleDock = [
-  { key: 'spotify', img: `${BASE}/icones/spotify.png`, label: 'Spotify' },
-  { key: 'github', img: `${BASE}/icones/git.png`, label: 'GitHub', href: 'https://github.com/LuigiMello' },
+const idleDockBefore = [{ key: 'spotify', img: `${BASE}/icones/spotify.png`, label: 'Spotify' }];
+
+const idleDockAfter = [
   { key: 'code', img: `${BASE}/icones/vscode.png`, label: 'VS Code' },
   { key: 'devtool', Icon: DevToolIcon, label: 'IntelliJ IDEA' },
   { key: 'notebook', Icon: NotebookIcon, label: 'Notas' },
@@ -57,6 +59,8 @@ export default function Desktop({
 
   return (
     <div className={styles.desktop}>
+      <SpaceBackground />
+
       {/* Menu bar */}
       <div className={styles.menuBar}>
         <div className={styles.menuLeft}>
@@ -78,6 +82,7 @@ export default function Desktop({
       {/* Windows */}
       {openApp === 'discord' && <DiscordWindow onClose={() => setOpenApp(null)} />}
       {openApp === 'brave' && <BraveWindow onClose={() => setOpenApp(null)}>{portfolioContent}</BraveWindow>}
+      {openApp === 'github' && <GitHubWindow onClose={() => setOpenApp(null)} />}
 
       {/* Dock */}
       <div className={styles.dock}>
@@ -96,14 +101,30 @@ export default function Desktop({
           <img src={`${BASE}/icones/discord.png`} alt="Discord" />
         </button>
 
-        {idleDock.map(({ key, Icon, img, label, href }) => (
+        {idleDockBefore.map(({ key, img, label }) => (
           <button
             key={key}
             className={`${styles.dockIcon} ${bounce === key ? styles.bounce : ''}`}
-            onClick={() => {
-              bump(key);
-              if (href) window.open(href, '_blank', 'noopener,noreferrer');
-            }}
+            onClick={() => bump(key)}
+            title={label}
+          >
+            <img src={img} alt={label} />
+          </button>
+        ))}
+
+        <button
+          className={`${styles.dockIcon} ${bounce === 'github' ? styles.bounce : ''}`}
+          onClick={() => setOpenApp('github')}
+          title="GitHub"
+        >
+          <img src={`${BASE}/icones/git.png`} alt="GitHub" />
+        </button>
+
+        {idleDockAfter.map(({ key, Icon, img, label }) => (
+          <button
+            key={key}
+            className={`${styles.dockIcon} ${bounce === key ? styles.bounce : ''}`}
+            onClick={() => bump(key)}
             title={label}
           >
             {img ? <img src={img} alt={label} /> : Icon && <Icon />}

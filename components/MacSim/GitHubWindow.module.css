@@ -1,0 +1,220 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  z-index: 8;
+}
+
+.window {
+  width: 100%;
+  max-width: 380px;
+  max-height: 84%;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: #0d1117;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.92) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.titleBar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #161b22;
+  z-index: 1;
+}
+
+.titleText {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.closeBtn {
+  background: none;
+  color: #8b949e;
+  font-size: 1.1rem;
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.body {
+  padding: 18px 18px 16px;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 10px;
+  color: #8b949e;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #58a6ff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fallbackLink {
+  color: #58a6ff;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.fallbackLink:hover {
+  text-decoration: underline;
+}
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #30363d;
+  display: block;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.displayName {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #e6edf3;
+}
+
+.handle {
+  font-size: 0.82rem;
+  color: #8b949e;
+}
+
+.bio {
+  margin-top: 12px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: #c9d1d9;
+}
+
+.stats {
+  display: flex;
+  gap: 18px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #21262d;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statNum {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e6edf3;
+}
+
+.statLbl {
+  font-size: 0.7rem;
+  color: #8b949e;
+}
+
+.repoList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.repoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #21262d;
+  background: #161b22;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.repoRow:hover {
+  border-color: #58a6ff;
+  background: #1c2129;
+}
+
+.repoName {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #58a6ff;
+}
+
+.repoDesc {
+  font-size: 0.76rem;
+  color: #8b949e;
+  line-height: 1.4;
+}
+
+.repoMeta {
+  display: flex;
+  gap: 12px;
+  margin-top: 2px;
+  font-size: 0.7rem;
+  color: #8b949e;
+}
+
+.viewProfile {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  padding: 9px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.viewProfile:hover {
+  background: #21262d;
+  border-color: #8b949e;
+}
