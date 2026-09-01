@@ -5,18 +5,28 @@ import styles from './SpaceShips.module.css';
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const NAVE_ASPECT = 612 / 416;
 const BASE_HEIGHT = 46;
+/* nave.png's rocket points ~34° up-right; rotate it level (nose -> +X) */
+const NAVE_ANGLE_CORRECTION = -0.595;
+
+type Direction = 'ltr' | 'rtl';
 
 interface ShipConfig {
   topPct: number;
   delay: number;
   duration: number;
   scale: number;
+  direction: Direction;
 }
 
 const SHIPS: ShipConfig[] = [
-  { topPct: 16, delay: 0, duration: 24, scale: 1 },
-  { topPct: 58, delay: 10, duration: 30, scale: 0.65 },
-  { topPct: 36, delay: 20, duration: 26, scale: 0.85 },
+  // left -> right (nose points right, matching travel direction)
+  { topPct: 14, delay: 0, duration: 24, scale: 1, direction: 'ltr' },
+  { topPct: 58, delay: 10, duration: 30, scale: 0.65, direction: 'ltr' },
+  { topPct: 36, delay: 20, duration: 26, scale: 0.85, direction: 'ltr' },
+  // right -> left (texture mirrored, nose points left, matching travel direction)
+  { topPct: 26, delay: 5, duration: 27, scale: 0.75, direction: 'rtl' },
+  { topPct: 70, delay: 15, duration: 32, scale: 0.6, direction: 'rtl' },
+  { topPct: 47, delay: 24, duration: 22, scale: 0.9, direction: 'rtl' },
 ];
 
 export default function SpaceShips() {
@@ -45,7 +55,7 @@ export default function SpaceShips() {
       const camera = new THREE.OrthographicCamera(0, W, H, 0, -100, 100);
       camera.position.z = 10;
 
-      const texture = await new Promise<import('three').Texture>((resolve, reject) => {
+      const textureLtr = await new Promise<import('three').Texture>((resolve, reject) => {
         new THREE.TextureLoader().load(`${BASE}/nave.png`, resolve, undefined, reject);
       });
       if (!active) {
@@ -55,21 +65,43 @@ export default function SpaceShips() {
         } catch {}
         return;
       }
-      texture.colorSpace = THREE.SRGBColorSpace;
+      textureLtr.colorSpace = THREE.SRGBColorSpace;
 
-      const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+      // Mirrored clone for right-to-left ships (flips via UV, not geometry,
+      // so it stays correct regardless of the non-uniform sprite scale/rotation).
+      const textureRtl = textureLtr.clone();
+      textureRtl.wrapS = THREE.RepeatWrapping;
+      textureRtl.repeat.x = -1;
+      textureRtl.needsUpdate = true;
+
+      const materialLtr = new THREE.SpriteMaterial({
+        map: textureLtr,
+        transparent: true,
+        rotation: NAVE_ANGLE_CORRECTION,
+      });
+      const materialRtl = new THREE.SpriteMaterial({
+        map: textureRtl,
+        transparent: true,
+        // Flipping the texture's U axis also flips the sense of `rotation`
+        // (rotation is applied to the quad after the UV flip), so the mirrored
+        // sprite needs the opposite sign to end up level and nose-first too.
+        rotation: -NAVE_ANGLE_CORRECTION,
+      });
 
       const ships = SHIPS.map((cfg) => {
-        const sprite = new THREE.Sprite(material);
+        const ltr = cfg.direction === 'ltr';
+        const sprite = new THREE.Sprite(ltr ? materialLtr : materialRtl);
         const height = BASE_HEIGHT * cfg.scale;
         sprite.scale.set(height * NAVE_ASPECT, height, 1);
-        sprite.position.set(-150, H * (1 - cfg.topPct / 100), 0);
+        const startX = ltr ? -150 : mount.clientWidth + 150;
+        sprite.position.set(startX, H * (1 - cfg.topPct / 100), 0);
         scene.add(sprite);
         return { sprite, cfg };
       });
 
       const flyTweens = ships.map(({ sprite, cfg }) => {
-        const endX = mount.clientWidth + 150;
+        const ltr = cfg.direction === 'ltr';
+        const endX = ltr ? mount.clientWidth + 150 : -150;
         return gsap.to(sprite.position, {
           x: endX,
           duration: cfg.duration,
@@ -113,8 +145,10 @@ export default function SpaceShips() {
         gsap.ticker.remove(tick);
         [...flyTweens, ...bobTweens].forEach((t) => t.kill());
         ships.forEach(({ sprite }) => scene.remove(sprite));
-        texture.dispose();
-        material.dispose();
+        textureLtr.dispose();
+        textureRtl.dispose();
+        materialLtr.dispose();
+        materialRtl.dispose();
         try {
           renderer!.dispose();
         } catch {}
