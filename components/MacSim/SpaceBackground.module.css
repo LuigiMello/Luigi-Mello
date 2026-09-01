@@ -21,25 +21,8 @@
   50%      { opacity: 1; }
 }
 
-.ship {
-  position: absolute;
-  left: -80px;
-  width: 60px;
-  height: 24px;
-  filter: drop-shadow(0 0 6px rgba(0, 208, 255, 0.5));
-  animation-name: flyAcross;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes flyAcross {
-  from { transform: translateX(-80px) scale(var(--s, 1)); }
-  to   { transform: translateX(calc(100vw + 80px)) scale(var(--s, 1)); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .star,
-  .ship {
+  .star {
     animation: none;
   }
 }
