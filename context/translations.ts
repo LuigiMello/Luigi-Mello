@@ -73,6 +73,16 @@ export const translations = {
       comingSoon: 'Em breve — fique ligado!',
       items: [
         {
+          name: 'Achou',
+          description:
+            'Marketplace completo estilo OLX/Mercado Livre — autenticação, criação de anúncios com upload de fotos, busca com filtros, favoritos, chat entre compradores e vendedores, notificações e painel do usuário. Next.js, TypeScript, Prisma e Framer Motion.',
+          tags: ['Next.js', 'TypeScript', 'Prisma', 'Framer Motion'],
+          github: 'https://github.com/LuigiMello/Achou',
+          demo: 'https://achou-alpha.vercel.app',
+          image: '/projects/achou.png',
+          color: '#1a9c56',
+        },
+        {
           name: 'CoPrompt',
           description:
             'Catálogo editorial de prompts de IA para moda e retrato, com fotos reais, scroll infinito e visualizador 3D — Next.js, TypeScript e Framer Motion.',
@@ -275,6 +285,16 @@ export const translations = {
       liveDemo: 'Demo',
       comingSoon: 'Coming soon — stay tuned!',
       items: [
+        {
+          name: 'Achou',
+          description:
+            'Full OLX/Mercado Livre-style marketplace — authentication, listing creation with photo upload, filtered search, favorites, buyer-seller chat, notifications and a user dashboard. Built with Next.js, TypeScript, Prisma and Framer Motion.',
+          tags: ['Next.js', 'TypeScript', 'Prisma', 'Framer Motion'],
+          github: 'https://github.com/LuigiMello/Achou',
+          demo: 'https://achou-alpha.vercel.app',
+          image: '/projects/achou.png',
+          color: '#1a9c56',
+        },
         {
           name: 'CoPrompt',
           description:
