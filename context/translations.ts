@@ -73,6 +73,16 @@ export const translations = {
       comingSoon: 'Em breve — fique ligado!',
       items: [
         {
+          name: 'CoPrompt',
+          description:
+            'Catálogo editorial de prompts de IA para moda e retrato, com fotos reais, scroll infinito e visualizador 3D — Next.js, TypeScript e Framer Motion.',
+          tags: ['Next.js', 'TypeScript', 'Framer Motion'],
+          github: 'https://github.com/LuigiMello/CoPrompt',
+          demo: 'https://luigimello.github.io/CoPrompt/',
+          image: '/projects/CoPrompt.png',
+          color: '#2a3fa8',
+        },
+        {
           name: 'Mirtillo',
           description:
             'Plataforma de infoprodutos com interface moderna, sistema de FAQ interativo, seção de cadastro e design responsivo.',
@@ -265,6 +275,16 @@ export const translations = {
       liveDemo: 'Demo',
       comingSoon: 'Coming soon — stay tuned!',
       items: [
+        {
+          name: 'CoPrompt',
+          description:
+            'Editorial catalog of AI prompts for fashion and portraits, with real photos, infinite scroll and a 3D viewer — Next.js, TypeScript and Framer Motion.',
+          tags: ['Next.js', 'TypeScript', 'Framer Motion'],
+          github: 'https://github.com/LuigiMello/CoPrompt',
+          demo: 'https://luigimello.github.io/CoPrompt/',
+          image: '/projects/CoPrompt.png',
+          color: '#2a3fa8',
+        },
         {
           name: 'Mirtillo',
           description:
