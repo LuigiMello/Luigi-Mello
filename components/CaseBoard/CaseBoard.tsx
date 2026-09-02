@@ -128,7 +128,7 @@ export default function CaseBoard() {
         <div className={styles.corkboard}>
           <svg className={styles.strings} viewBox="0 0 1000 640" preserveAspectRatio="none">
             <path d="M160,270 Q150,180 140,90" />
-            <path d="M160,270 Q460,150 770,120" />
+            <path d="M160,270 Q490,120 746,37" />
             <path d="M160,270 Q440,300 720,345" />
             <path d="M160,270 Q170,380 180,475" />
             <path d="M160,270 Q320,420 480,540" />
