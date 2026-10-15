@@ -25,7 +25,7 @@ export default function LockScreen({
         <span className={styles.time}>{time}</span>
         <span className={styles.date}>{date}</span>
       </div>
-      <span className={styles.hint}>clique para entrar</span>
+      <span className={styles.hint}>clique para entrar e acessar o portfólio</span>
     </button>
   );
 }

@@ -46,6 +46,7 @@ export default function Desktop({
 }) {
   const [openApp, setOpenApp] = useState<AppId>(null);
   const [bounce, setBounce] = useState<string | null>(null);
+  const [hintGone, setHintGone] = useState(false);
 
   const bump = (key: string) => {
     setBounce(key);
@@ -96,10 +97,21 @@ export default function Desktop({
       {openApp === 'code' && <VSCodeWindow onClose={() => setOpenApp(null)} />}
 
       {/* Dock */}
+      <div className={styles.dockArea}>
+      {!hintGone && openApp === null && (
+        <div className={styles.dockHint} aria-hidden="true">
+          <span className={styles.dockHintText}>Clique aqui para acessar o portfólio</span>
+          <div className={styles.dockHintArrows}>
+            <span>▼</span>
+            <span>▼</span>
+            <span>▼</span>
+          </div>
+        </div>
+      )}
       <div className={styles.dock}>
         <button
           className={`${styles.dockIcon} ${bounce === 'brave' ? styles.bounce : ''}`}
-          onClick={() => setOpenApp('brave')}
+          onClick={() => { setOpenApp('brave'); setHintGone(true); }}
           title="Brave"
         >
           <img src={`${BASE}/icones/brave.png`} alt="Brave" />
@@ -170,6 +182,7 @@ export default function Desktop({
         >
           <LaunchpadIcon />
         </button>
+      </div>
       </div>
     </div>
   );

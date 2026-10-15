@@ -47,7 +47,7 @@ export default function LoginScreen({ onLogin }: { onLogin: () => void }) {
         </button>
 
         <span className={`${styles.tip} ${status === 'checking' ? styles.tipChecking : ''}`}>
-          {status === 'checking' ? 'Entrando…' : 'clique para entrar'}
+          {status === 'checking' ? 'Entrando…' : 'clique para entrar e acessar o portfólio'}
         </span>
       </div>
     </div>
