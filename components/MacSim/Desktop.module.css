@@ -82,7 +82,7 @@
 /* Call-to-action floating above the dock, arrow aligned over the Brave icon */
 .dockHint {
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 4px);
   left: 0;
   display: flex;
   flex-direction: column;
@@ -112,7 +112,7 @@
 .dockHintArrows {
   position: relative;
   width: 0;
-  height: 44px;
+  height: 56px;
   color: #00d0ff;
   font-size: 0.95rem;
   line-height: 0.95;
@@ -122,7 +122,7 @@
 /* one column per target icon, centered on it via inline left (px) */
 .arrowCol {
   position: absolute;
-  top: 0;
+  bottom: 0;
   width: 28px;
   margin-left: -14px;
   display: flex;
