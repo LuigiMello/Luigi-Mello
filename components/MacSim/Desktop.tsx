@@ -46,7 +46,13 @@ export default function Desktop({
 }) {
   const [openApp, setOpenApp] = useState<AppId>(null);
   const [bounce, setBounce] = useState<string | null>(null);
-  const [hintGone, setHintGone] = useState(false);
+  // Onboarding hint above the dock: first points at Brave (the portfolio),
+  // then, once the portfolio has been seen, at the other apps that open too.
+  const [hintStage, setHintStage] = useState<'brave' | 'others' | 'done'>('brave');
+  const openOther = (app: AppId) => {
+    setOpenApp(app);
+    setHintStage('done');
+  };
 
   const bump = (key: string) => {
     setBounce(key);
@@ -98,27 +104,42 @@ export default function Desktop({
 
       {/* Dock */}
       <div className={styles.dockArea}>
-      {!hintGone && openApp === null && (
-        <div className={styles.dockHint} aria-hidden="true">
-          <span className={styles.dockHintText}>Clique aqui para acessar o portfólio</span>
+      {hintStage !== 'done' && openApp === null && (
+        <div
+          className={`${styles.dockHint} ${hintStage === 'others' ? styles.dockHintOthers : ''}`}
+          aria-hidden="true"
+        >
+          <span className={styles.dockHintText}>
+            {hintStage === 'brave'
+              ? 'Clique aqui para acessar o portfólio'
+              : 'Tem mais! Discord, Spotify, GitHub e VS Code também abrem'}
+          </span>
           <div className={styles.dockHintArrows}>
-            <span>▼</span>
-            <span>▼</span>
-            <span>▼</span>
+            {hintStage === 'brave' ? (
+              <>
+                <span>▼</span>
+                <span>▼</span>
+                <span>▼</span>
+              </>
+            ) : (
+              [0, 1, 2, 3].map((i) => (
+                <span key={i} style={{ animationDelay: `${i * 0.15}s` }}>▼</span>
+              ))
+            )}
           </div>
         </div>
       )}
       <div className={styles.dock}>
         <button
           className={`${styles.dockIcon} ${bounce === 'brave' ? styles.bounce : ''}`}
-          onClick={() => { setOpenApp('brave'); setHintGone(true); }}
+          onClick={() => { setOpenApp('brave'); setHintStage((s) => (s === 'brave' ? 'others' : s)); }}
           title="Brave"
         >
           <img src={`${BASE}/icones/brave.png`} alt="Brave" />
         </button>
         <button
           className={`${styles.dockIcon} ${bounce === 'discord' ? styles.bounce : ''}`}
-          onClick={() => setOpenApp('discord')}
+          onClick={() => openOther('discord')}
           title="Discord"
         >
           <img src={`${BASE}/icones/discord.png`} alt="Discord" />
@@ -126,7 +147,7 @@ export default function Desktop({
 
         <button
           className={`${styles.dockIcon} ${bounce === 'spotify' ? styles.bounce : ''}`}
-          onClick={() => setOpenApp('spotify')}
+          onClick={() => openOther('spotify')}
           title="Spotify"
         >
           <img src={`${BASE}/icones/spotify.png`} alt="Spotify" />
@@ -134,7 +155,7 @@ export default function Desktop({
 
         <button
           className={`${styles.dockIcon} ${bounce === 'github' ? styles.bounce : ''}`}
-          onClick={() => setOpenApp('github')}
+          onClick={() => openOther('github')}
           title="GitHub"
         >
           <img src={`${BASE}/icones/git.png`} alt="GitHub" />
@@ -142,7 +163,7 @@ export default function Desktop({
 
         <button
           className={`${styles.dockIcon} ${bounce === 'code' ? styles.bounce : ''}`}
-          onClick={() => setOpenApp('code')}
+          onClick={() => openOther('code')}
           title="VS Code"
         >
           <img src={`${BASE}/icones/vscode.png`} alt="VS Code" />
