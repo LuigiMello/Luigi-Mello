@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { SKILLS } from '@/lib/skillsData';
 import styles from './CaseBoard.module.css';
@@ -8,9 +8,65 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 type FileKey = 'about' | 'skills' | 'projects' | 'services' | 'contact';
 
+const STRING_TARGETS: FileKey[] = ['about', 'skills', 'projects', 'services', 'contact'];
+
+interface Strings {
+  w: number;
+  h: number;
+  paths: string[];
+}
+
 export default function CaseBoard() {
   const { tr, lang, toggleLang } = useLanguage();
   const [active, setActive] = useState<FileKey | null>(null);
+  const corkRef = useRef<HTMLDivElement>(null);
+  const [strings, setStrings] = useState<Strings | null>(null);
+
+  // The red strings are drawn from the polaroid's pin to each note's pin using
+  // the pins' real positions, so they stay attached at every container size
+  // (notes are positioned in % but sized in px, so fixed coordinates drift).
+  useEffect(() => {
+    const cork = corkRef.current;
+    if (!cork) return;
+
+    const measure = () => {
+      const box = cork.getBoundingClientRect();
+      const center = (el: Element | null) => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
+      };
+      const origin = center(cork.querySelector('[data-anchor="photo"]'));
+      if (!origin) return;
+
+      const paths: string[] = [];
+      for (const key of STRING_TARGETS) {
+        const end = center(cork.querySelector(`[data-anchor="${key}"]`));
+        if (!end) continue;
+        const dx = end.x - origin.x;
+        const dy = end.y - origin.y;
+        const len = Math.hypot(dx, dy) || 1;
+        // Sag the string a little, perpendicular to the chord, towards the floor.
+        let nx = -dy / len;
+        let ny = dx / len;
+        if (ny < 0) { nx = -nx; ny = -ny; }
+        const cx = (origin.x + end.x) / 2 + nx * len * 0.09;
+        const cy = (origin.y + end.y) / 2 + ny * len * 0.09;
+        paths.push(`M${origin.x.toFixed(1)},${origin.y.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${end.x.toFixed(1)},${end.y.toFixed(1)}`);
+      }
+      setStrings({ w: box.width, h: box.height, paths });
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(cork);
+    // Pins don't move on their own, but late layout (fonts, photo) can shift them.
+    const t = window.setTimeout(measure, 400);
+    return () => {
+      ro.disconnect();
+      window.clearTimeout(t);
+    };
+  }, [lang]);
 
   const labels: Record<FileKey, { tag: string; title: string }> = {
     about: { tag: '01', title: lang === 'pt' ? 'PERFIL DO SUSPEITO' : 'SUBJECT PROFILE' },
@@ -125,14 +181,18 @@ export default function CaseBoard() {
   return (
     <div className={styles.board}>
       <div className={styles.boardScroll}>
-        <div className={styles.corkboard}>
-          <svg className={styles.strings} viewBox="0 0 1000 640" preserveAspectRatio="none">
-            <path d="M160,270 Q150,180 140,90" />
-            <path d="M160,270 Q490,120 746,37" />
-            <path d="M160,270 Q440,300 720,345" />
-            <path d="M160,270 Q170,380 180,475" />
-            <path d="M160,270 Q320,420 480,540" />
-          </svg>
+        <div ref={corkRef} className={styles.corkboard}>
+          {strings && (
+            <svg
+              className={styles.strings}
+              width={strings.w}
+              height={strings.h}
+              viewBox={`0 0 ${strings.w} ${strings.h}`}
+              aria-hidden="true"
+            >
+              {strings.paths.map((d) => <path key={d} d={d} />)}
+            </svg>
+          )}
 
           <button className={styles.langBtn} onClick={toggleLang}>{lang === 'pt' ? 'EN' : 'PT'}</button>
 
@@ -142,7 +202,7 @@ export default function CaseBoard() {
           </div>
 
           <div className={styles.photoPin}>
-            <div className={styles.pinDot} />
+            <div className={styles.pinDot} data-anchor="photo" />
             <img src={`${BASE}/avatar.jpg`} alt="Luigi Mello" />
             <span className={styles.photoTape} />
             <div className={styles.photoCaption}>
@@ -152,29 +212,29 @@ export default function CaseBoard() {
           </div>
 
           <button className={`${styles.note} ${styles.noteAbout}`} onClick={() => setActive('about')}>
-            <span className={styles.pinDot} />
+            <span className={styles.pinDot} data-anchor="about" />
             {labels.about.title}
           </button>
 
           <button className={`${styles.note} ${styles.noteSkills}`} onClick={() => setActive('skills')}>
-            <span className={styles.pinDot} />
+            <span className={styles.pinDot} data-anchor="skills" />
             {labels.skills.title}
           </button>
 
           <button className={`${styles.note} ${styles.noteProjects}`} onClick={() => setActive('projects')}>
-            <span className={styles.pinDot} />
+            <span className={styles.pinDot} data-anchor="projects" />
             {labels.projects.title}
             <span className={styles.badge}>05</span>
           </button>
 
           <button className={`${styles.note} ${styles.noteServices}`} onClick={() => setActive('services')}>
-            <span className={styles.pinDot} />
+            <span className={styles.pinDot} data-anchor="services" />
             {labels.services.title}
             <span className={styles.badge}>06</span>
           </button>
 
           <button className={`${styles.note} ${styles.noteContact}`} onClick={() => setActive('contact')}>
-            <span className={styles.pinDot} />
+            <span className={styles.pinDot} data-anchor="contact" />
             {labels.contact.title}
           </button>
         </div>

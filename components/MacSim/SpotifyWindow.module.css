@@ -332,9 +332,36 @@
 
 .npLink:hover { background: rgba(30, 215, 96, 0.14); }
 
+.main { min-width: 0; overflow-x: hidden; }
+
 @media (max-width: 700px) {
   .overlay { padding: 14px 6px 76px; }
-  .sidebar { width: 150px; padding: 14px 10px; }
-  .npLeft, .npRight { width: 120px; }
-  .npTitle, .trackTitle { font-size: 0.76rem; }
+
+  /* sidebar becomes a horizontal strip above the track list */
+  .body { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    padding: 10px 12px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .brand { margin-bottom: 0; margin-right: 6px; font-size: 0.95rem; }
+  .playlistBtn { padding: 7px 10px; font-size: 0.74rem; }
+  .sidebarNote { display: none; }
+
+  .main { padding: 8px 8px 12px; }
+  .trackRow { gap: 10px; padding: 8px 6px; }
+  .trackGenre { display: none; }
+  .trackTitle { font-size: 0.8rem; }
+  .trackDuration { width: 34px; }
+
+  /* now-playing bar: info + link on top, controls underneath */
+  .nowPlaying { flex-wrap: wrap; gap: 8px 12px; padding: 10px 12px; }
+  .npLeft { flex: 1; width: auto; }
+  .npRight { width: auto; }
+  .npCenter { order: 3; flex-basis: 100%; max-width: none; }
 }
