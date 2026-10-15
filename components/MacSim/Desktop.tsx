@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import styles from './Desktop.module.css';
 import DiscordWindow from './DiscordWindow';
 import BraveWindow from './BraveWindow';
@@ -49,6 +49,14 @@ export default function Desktop({
   // Onboarding hint above the dock: first points at Brave (the portfolio),
   // then, once the portfolio has been seen, at the other apps that open too.
   const [hintStage, setHintStage] = useState<'brave' | 'others' | 'done'>('brave');
+  // Hint arrows are placed from the real icon positions (not hard-coded
+  // sizes), so they sit exactly over each logo at any dock size.
+  const iconRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const dockRef = useRef<HTMLDivElement>(null);
+  const [arrowX, setArrowX] = useState<Record<string, number>>({});
+  const setIcon = (key: string) => (el: HTMLButtonElement | null) => {
+    iconRefs.current[key] = el;
+  };
   const openOther = (app: AppId) => {
     setOpenApp(app);
     setHintStage('done');
@@ -58,6 +66,22 @@ export default function Desktop({
     setBounce(key);
     setTimeout(() => setBounce(null), 500);
   };
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const dock = dockRef.current;
+      if (!dock) return;
+      const next: Record<string, number> = {};
+      for (const [key, btn] of Object.entries(iconRefs.current)) {
+        if (!btn) continue;
+        next[key] = btn.offsetLeft + btn.offsetWidth / 2 + dock.clientLeft - dock.scrollLeft;
+      }
+      setArrowX(next);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [hintStage, openApp]);
 
   // Desktop only mounts after the lock/login screens, well after the
   // client-side effect in MacSim has set a real Date — this fallback just
@@ -115,25 +139,30 @@ export default function Desktop({
               : 'Tem mais! Discord, Spotify, GitHub e VS Code também abrem'}
           </span>
           <div className={styles.dockHintArrows}>
-            {hintStage === 'brave' ? (
-              <>
-                <span>▼</span>
-                <span>▼</span>
-                <span>▼</span>
-              </>
-            ) : (
-              [0, 1, 2, 3].map((i) => (
-                <span key={i} style={{ animationDelay: `${i * 0.15}s` }}>▼</span>
-              ))
+            {(hintStage === 'brave' ? ['brave'] : ['discord', 'spotify', 'github', 'code']).map((key, i) =>
+              arrowX[key] === undefined ? null : (
+                <div key={key} className={styles.arrowCol} style={{ left: arrowX[key] }}>
+                  {hintStage === 'brave' ? (
+                    <>
+                      <span>▼</span>
+                      <span>▼</span>
+                      <span>▼</span>
+                    </>
+                  ) : (
+                    <span style={{ animationDelay: `${i * 0.15}s` }}>▼</span>
+                  )}
+                </div>
+              )
             )}
           </div>
         </div>
       )}
-      <div className={styles.dock}>
+      <div className={styles.dock} ref={dockRef}>
         <button
           className={`${styles.dockIcon} ${bounce === 'brave' ? styles.bounce : ''}`}
           onClick={() => { setOpenApp('brave'); setHintStage((s) => (s === 'brave' ? 'others' : s)); }}
           title="Brave"
+          ref={setIcon('brave')}
         >
           <img src={`${BASE}/icones/brave.png`} alt="Brave" />
         </button>
@@ -141,6 +170,7 @@ export default function Desktop({
           className={`${styles.dockIcon} ${bounce === 'discord' ? styles.bounce : ''}`}
           onClick={() => openOther('discord')}
           title="Discord"
+          ref={setIcon('discord')}
         >
           <img src={`${BASE}/icones/discord.png`} alt="Discord" />
         </button>
@@ -149,6 +179,7 @@ export default function Desktop({
           className={`${styles.dockIcon} ${bounce === 'spotify' ? styles.bounce : ''}`}
           onClick={() => openOther('spotify')}
           title="Spotify"
+          ref={setIcon('spotify')}
         >
           <img src={`${BASE}/icones/spotify.png`} alt="Spotify" />
         </button>
@@ -157,6 +188,7 @@ export default function Desktop({
           className={`${styles.dockIcon} ${bounce === 'github' ? styles.bounce : ''}`}
           onClick={() => openOther('github')}
           title="GitHub"
+          ref={setIcon('github')}
         >
           <img src={`${BASE}/icones/git.png`} alt="GitHub" />
         </button>
@@ -165,6 +197,7 @@ export default function Desktop({
           className={`${styles.dockIcon} ${bounce === 'code' ? styles.bounce : ''}`}
           onClick={() => openOther('code')}
           title="VS Code"
+          ref={setIcon('code')}
         >
           <img src={`${BASE}/icones/vscode.png`} alt="VS Code" />
         </button>

@@ -31,10 +31,17 @@ export default function CaseBoard() {
 
     const measure = () => {
       const box = cork.getBoundingClientRect();
+      // The board lives inside a window that scales in when it opens, so
+      // rects are scaled; divide that out to get the board's own px space.
+      const scale = box.width / (cork.offsetWidth || box.width) || 1;
       const center = (el: Element | null) => {
         if (!el) return null;
         const r = el.getBoundingClientRect();
-        return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
+        return {
+          // the SVG sits inside the board's border, so measure from the padding box
+          x: (r.left + r.width / 2 - box.left) / scale - cork.clientLeft,
+          y: (r.top + r.height / 2 - box.top) / scale - cork.clientTop,
+        };
       };
       const origin = center(cork.querySelector('[data-anchor="photo"]'));
       if (!origin) return;
@@ -54,17 +61,17 @@ export default function CaseBoard() {
         const cy = (origin.y + end.y) / 2 + ny * len * 0.09;
         paths.push(`M${origin.x.toFixed(1)},${origin.y.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${end.x.toFixed(1)},${end.y.toFixed(1)}`);
       }
-      setStrings({ w: box.width, h: box.height, paths });
+      setStrings({ w: cork.clientWidth, h: cork.clientHeight, paths });
     };
 
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(cork);
     // Pins don't move on their own, but late layout (fonts, photo) can shift them.
-    const t = window.setTimeout(measure, 400);
+    const timers = [400, 1000].map((ms) => window.setTimeout(measure, ms));
     return () => {
       ro.disconnect();
-      window.clearTimeout(t);
+      timers.forEach((t) => window.clearTimeout(t));
     };
   }, [lang]);
 

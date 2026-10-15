@@ -72,9 +72,6 @@
 
 /* ── Dock ── */
 .dockArea {
-  --pad: 14px;
-  --ic: 52px;
-  --gap: 9px;
   position: absolute;
   bottom: 16px;
   left: 50%;
@@ -113,33 +110,33 @@
 }
 
 .dockHintArrows {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 52px;
-  margin-left: 14px;
+  position: relative;
+  width: 0;
+  height: 44px;
   color: #00d0ff;
   font-size: 0.95rem;
   line-height: 0.95;
   filter: drop-shadow(0 0 6px rgba(0, 208, 255, 0.7));
 }
 
-.dockHintArrows span {
+/* one column per target icon, centered on it via inline left (px) */
+.arrowCol {
+  position: absolute;
+  top: 0;
+  width: 28px;
+  margin-left: -14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arrowCol span {
   animation: arrowDrop 1.2s ease-in-out infinite;
   opacity: 0;
 }
 
-/* Second stage: one arrow over each of Discord / Spotify / GitHub / VS Code */
-.dockHintOthers .dockHintArrows {
-  flex-direction: row;
-  width: auto;
-  gap: var(--gap);
-  margin-left: calc(var(--pad) + var(--ic) + var(--gap));
-}
-
-.dockHintOthers .dockHintArrows span {
-  width: var(--ic);
-  text-align: center;
+/* Second stage: a single bobbing arrow over each of the other apps */
+.dockHintOthers .arrowCol span {
   animation-name: arrowBob;
 }
 
@@ -148,8 +145,8 @@
   50%      { opacity: 1; transform: translateY(3px); }
 }
 
-.dockHintArrows span:nth-child(2) { animation-delay: 0.18s; }
-.dockHintArrows span:nth-child(3) { animation-delay: 0.36s; }
+.arrowCol span:nth-child(2) { animation-delay: 0.18s; }
+.arrowCol span:nth-child(3) { animation-delay: 0.36s; }
 
 @keyframes arrowDrop {
   0%   { opacity: 0; transform: translateY(-6px); }
@@ -227,8 +224,6 @@
 
 @media (max-width: 600px) {
   .dockHintText { font-size: 0.68rem; padding: 6px 10px; }
-  .dockArea { --pad: 9px; --ic: 40px; --gap: 6px; }
-  .dockHintArrows { width: 40px; margin-left: 9px; }
   .dock {
     gap: 6px;
     padding: 7px 9px;
@@ -247,8 +242,6 @@
 
 @media (max-width: 420px) {
   .dockHintText { font-size: 0.62rem; letter-spacing: 0.04em; }
-  .dockArea { --pad: 7px; --ic: 32px; --gap: 4px; }
-  .dockHintArrows { width: 32px; margin-left: 7px; }
   .dock {
     gap: 4px;
     padding: 6px 7px;
