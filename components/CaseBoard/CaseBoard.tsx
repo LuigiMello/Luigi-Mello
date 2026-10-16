@@ -231,7 +231,7 @@ export default function CaseBoard() {
           <button className={`${styles.note} ${styles.noteProjects}`} onClick={() => setActive('projects')}>
             <span className={styles.pinDot} data-anchor="projects" />
             {labels.projects.title}
-            <span className={styles.badge}>05</span>
+            <span className={styles.badge}>{String(tr.projects.items.length).padStart(2, '0')}</span>
           </button>
 
           <button className={`${styles.note} ${styles.noteServices}`} onClick={() => setActive('services')}>

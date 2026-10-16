@@ -73,6 +73,16 @@ export const translations = {
       comingSoon: 'Em breve — fique ligado!',
       items: [
         {
+          name: 'Cifra',
+          description:
+            'Painel de finanças pessoais gratuito, feito do zero — registro de entradas e saídas, gráficos por dia, semana, mês e ano, orçamentos e metas, controle de contas fixas e contas individuais com dados privados. Next.js, TypeScript e PostgreSQL.',
+          tags: ['Next.js', 'TypeScript', 'PostgreSQL'],
+          github: '#',
+          demo: 'https://minhacifra.vercel.app',
+          image: '/projects/cifra.png',
+          color: '#9be22f',
+        },
+        {
           name: 'Achou',
           description:
             'Marketplace completo estilo OLX/Mercado Livre — autenticação, criação de anúncios com upload de fotos, busca com filtros, favoritos, chat entre compradores e vendedores, notificações e painel do usuário. Next.js, TypeScript, Prisma e Framer Motion.',
@@ -285,6 +295,16 @@ export const translations = {
       liveDemo: 'Demo',
       comingSoon: 'Coming soon — stay tuned!',
       items: [
+        {
+          name: 'Cifra',
+          description:
+            'Free personal finance dashboard built from scratch — income and expense tracking, charts by day, week, month and year, budgets and goals, recurring bills tracking, and per-user accounts with private data. Built with Next.js, TypeScript and PostgreSQL.',
+          tags: ['Next.js', 'TypeScript', 'PostgreSQL'],
+          github: '#',
+          demo: 'https://minhacifra.vercel.app',
+          image: '/projects/cifra.png',
+          color: '#9be22f',
+        },
         {
           name: 'Achou',
           description:
