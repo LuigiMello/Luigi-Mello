@@ -184,6 +184,38 @@ export function spreadProject(spread: number) {
   return -1;
 }
 
+/** Short name of a single page, for the reading panel on compact screens. */
+export function pageLabel(page: number, lang: Lang) {
+  const ui = UI[lang];
+  const p = PAGES[page];
+  if (!p) return '';
+  switch (p.kind) {
+    case 'contents':
+      return ui.contentsTitle;
+    case 'letter':
+      return ui.letterKicker;
+    case 'divider':
+      return ui.sections[p.section];
+    case 'aboutCover':
+    case 'profile':
+    case 'facts':
+      return ui.sections.about;
+    case 'grid':
+      return ui.sections.projects;
+    case 'shot':
+    case 'feature':
+      return getProjects(lang)[p.project].name;
+    case 'skills':
+      return ui.sections.skills;
+    case 'services':
+      return ui.sections.services;
+    case 'contact':
+      return ui.sections.contact;
+    default:
+      return ui.sections.end;
+  }
+}
+
 /** Short name of what a spread is about, for the controls under the magazine. */
 export function spreadLabel(spread: number, lang: Lang) {
   const ui = UI[lang];
@@ -254,6 +286,9 @@ export const UI = {
     colophon: 'Feito à mão com Three.js, GSAP & Next.js',
     price: 'Grátis para recrutadores',
     privateBuild: 'Projeto privado',
+    readText: 'Ler texto',
+    hideText: 'Ocultar',
+    pageWord: 'Pág.',
     letterKicker: 'Carta do editor',
     letterTitle: 'Bem-vindo à edição 2026.',
     letterBody: [
@@ -331,6 +366,9 @@ export const UI = {
     colophon: 'Handmade with Three.js, GSAP & Next.js',
     price: 'Free for recruiters',
     privateBuild: 'Private build',
+    readText: 'Read text',
+    hideText: 'Hide',
+    pageWord: 'Page',
     letterKicker: "Editor's letter",
     letterTitle: 'Welcome to the 2026 issue.',
     letterBody: [

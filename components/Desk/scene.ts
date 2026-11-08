@@ -8,7 +8,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { Book, COVER_H, COVER_W, PAGE_H, PAGE_W } from './book';
-import { MAX_SPREAD, PAGES } from './content';
+import { MAX_SPREAD, PAGES, spreadOfPage } from './content';
 import { ART_H, ART_W, hotspotAt, renderPage, type DrawContext, type Hotspot } from './pages';
 import { createCards, createCoffee, createDesk, createPencil, createPlant } from './props';
 import { makeCanvas } from './textures';
@@ -18,6 +18,27 @@ gsap.registerPlugin(Observer);
 export interface DeskState {
   open: boolean;
   spread: number;
+  /** In compact layouts the camera reads one page at a time. */
+  focus: 'left' | 'right';
+  /** The page being read in compact layouts, or -1. */
+  page: number;
+}
+
+export interface Insets {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+/**
+ * How the page around the 3D view is laid out: `compact` reads one page at a
+ * time (phones, tablets, small windows); `insets` is the screen area covered
+ * by interface, so the magazine is framed in what's left.
+ */
+export interface DeskLayout {
+  compact: boolean;
+  insets: Insets;
 }
 
 const FinishShader = {
@@ -65,6 +86,10 @@ export class DeskExperience {
   private raf = 0;
   private spread = 0;
   private pose = { open: 0 };
+  private focus: 'left' | 'right' = 'left';
+  private view = { fx: 0 };
+  private layout: DeskLayout = { compact: false, insets: { top: 0, right: 0, bottom: 0, left: 0 } };
+  private ins: Insets = { top: 0, right: 0, bottom: 0, left: 0 };
   private pointer = new THREE.Vector2(0, 0);
   private parallax = new THREE.Vector2(0, 0);
   private ray = new THREE.Raycaster();
@@ -230,24 +255,68 @@ export class DeskExperience {
     });
   }
 
+  setLayout(layout: DeskLayout) {
+    const changed = layout.compact !== this.layout.compact;
+    this.layout = layout;
+    if (changed) {
+      this.aimFocus();
+      this.emit();
+    }
+  }
+
+  /** Next page: in compact layouts the right-hand page comes before the turn. */
   next() {
-    this.goTo(this.spread + 1);
+    if (this.layout.compact && this.spread > 0 && this.focus === 'left') {
+      this.setFocus('right');
+      return;
+    }
+    if (this.spread >= MAX_SPREAD) return;
+    this.goTo(this.spread + 1, 'left');
   }
 
   prev() {
-    this.goTo(this.spread - 1);
+    if (this.layout.compact && this.spread > 0 && this.focus === 'right') {
+      this.setFocus('left');
+      return;
+    }
+    if (this.spread <= 0) return;
+    this.goTo(this.spread - 1, 'right');
   }
 
   close() {
     this.goTo(0);
   }
 
-  goTo(target: number) {
+  /** Opens the magazine on a given page (and, in compact layouts, reads that page). */
+  goToPage(page: number) {
+    if (page <= 0) return this.goTo(0);
+    this.goTo(spreadOfPage(page), page % 2 === 1 ? 'left' : 'right');
+  }
+
+  private setFocus(f: 'left' | 'right') {
+    if (f === this.focus) return;
+    this.focus = f;
+    this.setHot(null);
+    this.aimFocus();
+    this.emit();
+  }
+
+  private aimFocus() {
+    const fx = this.layout.compact && this.spread > 0 ? (this.focus === 'left' ? -PAGE_W / 2 : PAGE_W / 2) : 0;
+    gsap.to(this.view, { fx, duration: 0.9, ease: 'power3.inOut', overwrite: 'auto' });
+  }
+
+  goTo(target: number, focus: 'left' | 'right' = 'left') {
     target = THREE.MathUtils.clamp(target, 0, MAX_SPREAD);
     const from = this.spread;
-    if (target === from) return;
+    if (target === from) {
+      if (target > 0) this.setFocus(focus);
+      return;
+    }
     const forward = target > from;
     this.spread = target;
+    this.focus = focus;
+    this.aimFocus();
 
     for (const leaf of this.book.leaves) gsap.to(leaf, { hover: 0, duration: 0.3, overwrite: 'auto' });
     this.setHot(null);
@@ -301,30 +370,59 @@ export class DeskExperience {
   /* ── internals ──────────────────────────────────────────────────── */
 
   private emit() {
-    this.onChange({ open: this.spread > 0, spread: this.spread });
+    const page = this.layout.compact && this.spread > 0 ? this.spread * 2 - (this.focus === 'left' ? 1 : 0) : -1;
+    this.onChange({ open: this.spread > 0, spread: this.spread, focus: this.focus, page });
   }
 
   private applyCamera(snap = false) {
     const { clientWidth: w, clientHeight: h } = this.container;
     const aspect = w / h;
     const o = this.pose.open;
+    const compact = this.layout.compact;
+
+    // ease toward the free area so panels sliding in/out don't jolt the camera
+    const k = snap ? 1 : 0.12;
+    for (const key of ['top', 'right', 'bottom', 'left'] as const) {
+      this.ins[key] += (this.layout.insets[key] - this.ins[key]) * k;
+    }
+    const W = Math.max(120, w - this.ins.left - this.ins.right);
+    const H = Math.max(120, h - this.ins.top - this.ins.bottom);
+    const cx = this.ins.left + W / 2;
+    const cy = this.ins.top + H / 2;
+
     const tanV = Math.tan((this.camera.fov * DEG) / 2);
     const tanH = tanV * aspect;
     const portrait = aspect < 0.9;
-    const elev = lerp(57, portrait ? 76 : 68, o) * DEG;
-    const needW = lerp(portrait ? 3.7 : 6.7, portrait ? 3.36 : 4.05, o);
-    const needD = lerp(portrait ? 6.5 : 4.9, portrait ? 2.6 : 2.25, o);
-    const dist = Math.max(needW / 2 / tanH, ((needD / 2) * Math.sin(elev)) / tanV);
-    const tz = lerp(0.42, 0.2, o);
-    const tx = 0;
+    let elev: number;
+    let fitW: number;
+    let fitD: number;
+    let tx: number;
+    let tz: number;
+    if (compact) {
+      // one page at a time, seen almost from above so it reads flat
+      elev = lerp(60, 78, o) * DEG;
+      fitW = lerp(2.6, PAGE_W + 0.12, o);
+      fitD = lerp(2.0, PAGE_H + 0.16, o);
+      tx = lerp(0.1, this.view.fx, o);
+      tz = lerp(0.3, 0.0, o);
+    } else {
+      elev = lerp(57, 68, o) * DEG;
+      fitW = lerp(portrait ? 4.4 : 6.7, 4.05, o);
+      fitD = lerp(portrait ? 6.5 : 4.9, 2.25, o);
+      tx = this.view.fx;
+      tz = lerp(0.42, 0.08, o);
+    }
+    const dist = Math.max((fitW * w) / (2 * tanH * W), (fitD * Math.sin(elev) * h) / (2 * tanV * H));
 
     if (snap) this.parallax.copy(this.pointer);
-    const px = this.parallax.x * lerp(0.22, 0.08, o);
-    const pz = this.parallax.y * lerp(0.12, 0.05, o);
+    const amt = compact ? 0.25 : 1;
+    const px = this.parallax.x * lerp(0.22, 0.08, o) * amt;
+    const pz = this.parallax.y * lerp(0.12, 0.05, o) * amt;
     this.camera.position.set(tx + px, Math.sin(elev) * dist, tz + Math.cos(elev) * dist - pz);
     this.camera.lookAt(tx + px * 0.4, 0, tz - pz * 0.4);
     this.camera.aspect = aspect;
-    this.camera.updateProjectionMatrix();
+    // shift the image so the framed area's centre lands in the middle of the free space
+    this.camera.setViewOffset(w, h, w / 2 - cx, h / 2 - cy, w, h);
 
     // the magazine slides to the centre and squares up as it opens
     const g = this.book.group;
@@ -405,8 +503,8 @@ export class DeskExperience {
   }
 
   private activate(spot: Hotspot) {
-    if (spot.goto !== undefined) {
-      this.goTo(spot.goto);
+    if (spot.toPage !== undefined) {
+      this.goToPage(spot.toPage);
     } else if (spot.href) {
       if (spot.href.startsWith('mailto:')) window.location.href = spot.href;
       else window.open(spot.href, '_blank', 'noopener,noreferrer');
@@ -461,7 +559,14 @@ export class DeskExperience {
     const { hit, spot } = this.spotUnder(e.clientX, e.clientY);
     if (spot) this.activate(spot);
     else if (hit.zone === 'book') this.goTo(1);
-    else if (hit.zone === 'right') this.next();
+    else if (this.layout.compact && this.spread > 0) {
+      // one page fills the view: tap the right half to go on, the left half to go back
+      const r = this.renderer.domElement.getBoundingClientRect();
+      const W = r.width - this.layout.insets.left - this.layout.insets.right;
+      const rel = (e.clientX - r.left - this.layout.insets.left) / Math.max(1, W);
+      if (rel >= 0.5) this.next();
+      else this.prev();
+    } else if (hit.zone === 'right') this.next();
     else if (hit.zone === 'left') this.prev();
     if (e.pointerType === 'mouse') this.updateHover(e.clientX, e.clientY);
   };
@@ -474,7 +579,10 @@ export class DeskExperience {
 
   private onKey = (e: KeyboardEvent) => {
     if (e.target instanceof HTMLInputElement) return;
-    if (e.key === 'ArrowRight') this.goTo(this.spread + 1);
+    if (e.key === 'ArrowRight') {
+      if (this.spread === 0) this.goTo(1);
+      else this.next();
+    }
     else if (e.key === 'ArrowLeft') this.prev();
     else if (e.key === 'Escape') this.close();
     else return;
@@ -494,12 +602,15 @@ export class DeskExperience {
   private wheelStep(dir: 1 | -1) {
     const now = performance.now();
     if (now < this.wheelLock) return;
-    const target = this.spread + dir;
-    if (target < 0 || target > MAX_SPREAD) return;
+    const before = `${this.spread}:${this.focus}`;
+    const opening = this.spread === 0 && dir > 0;
+    if (opening) this.goTo(1);
+    else if (dir > 0) this.next();
+    else this.prev();
+    if (`${this.spread}:${this.focus}` === before) return;
     // opening/closing moves the camera too, so give it a little longer
-    this.wheelLock = now + (this.spread === 0 || target === 0 ? 1100 : 620);
+    this.wheelLock = now + (opening || this.spread === 0 ? 1100 : 620);
     this.lastFlip = now;
-    this.goTo(target);
   }
 
   private bind() {
@@ -513,6 +624,7 @@ export class DeskExperience {
       target: window,
       type: 'wheel',
       tolerance: 14,
+      ignore: '[data-no-flip]',
       preventDefault: true,
       onWheel: () => {
         // a pause in the wheel starts a new gesture, which may turn a page right away

@@ -6,7 +6,6 @@ import {
   SKILLS,
   translations,
   pageOf,
-  spreadOfPage,
   type Lang,
   type PageSpec,
   type Project,
@@ -48,7 +47,8 @@ export interface Hotspot {
   y: number;
   w: number;
   h: number;
-  goto?: number;
+  /** Page to open. */
+  toPage?: number;
   href?: string;
 }
 
@@ -470,7 +470,7 @@ function drawContents(ctx: C, d: DrawContext, page: number) {
     txt(ctx, '→', x + 328, y, 'right');
     ctx.fillStyle = 'rgba(0,0,0,0.12)';
     ctx.fillRect(x, y + 18, 330, 1);
-    addHot(page, { id, x: x - 12, y: y - 33, w: 352, h: 50, goto: spreadOfPage(n) });
+    addHot(page, { id, x: x - 12, y: y - 33, w: 352, h: 50, toPage: n });
   };
   const label = (x: number, y: number, s: string) => {
     font(ctx, `600 14px ${MONO}`, '#6f6f68', 2.5);
@@ -820,7 +820,7 @@ function drawGrid(ctx: C, d: DrawContext, page: number) {
     ctx.strokeStyle = hot ? accent : 'rgba(255,255,255,0.12)';
     ctx.lineWidth = hot ? 2.5 : 1;
     ctx.stroke();
-    addHot(page, { id, x, y, w: size, h: size, goto: spreadOfPage(pageOf('shot', i)) });
+    addHot(page, { id, x, y, w: size, h: size, toPage: pageOf('shot', i) });
   });
 
   grain(ctx, true);
@@ -900,7 +900,7 @@ function drawFeature(ctx: C, d: DrawContext, page: number, i: number) {
   const bw = ctx.measureText(back).width;
   txt(ctx, back, ART_W - 64, 104, 'right');
   if (backHot) ctx.fillRect(ART_W - 64 - bw, 111, bw, 1.5);
-  addHot(page, { id: 'index', x: ART_W - 64 - bw - 10, y: 80, w: bw + 20, h: 38, goto: spreadOfPage(pageOf('grid')) });
+  addHot(page, { id: 'index', x: ART_W - 64 - bw - 10, y: 80, w: bw + 20, h: 38, toPage: pageOf('grid') });
 
   const title = p.name.toUpperCase();
   const size = fitFont(ctx, title, '700', SANS, 88, 480);
