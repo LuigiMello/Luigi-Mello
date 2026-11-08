@@ -39,12 +39,12 @@ export const translations = {
     about: {
       title: 'Especificações',
       subtitle: 'ficha técnica',
-      p1: 'Sou Luigi Mello, desenvolvedor apaixonado por tecnologia com experiência em desenvolvimento web Full Stack. Acredito que o bom código vai além de funcionar — ele deve ser limpo, eficiente e escalável.',
+      p1: 'Sou Luigi Mello, desenvolvedor apaixonado por tecnologia com experiência em desenvolvimento web Full Stack. Acredito que o bom código vai além de funcionar: ele deve ser limpo, eficiente e escalável.',
       p2: 'Trabalho com as principais tecnologias do mercado, tanto no frontend quanto no backend, sempre buscando as melhores práticas de desenvolvimento. Sou curioso por natureza e adoro explorar novos frameworks e ferramentas.',
       p3: 'Além disso, possuo um bom domínio do inglês, o que me permite colaborar com equipes internacionais, consumir conteúdo técnico no idioma original e expandir minhas oportunidades profissionais.',
       englishBadge: '🇺🇸 Inglês Avançado',
       englishDesc:
-        'Nível avançado em inglês — leitura de documentações técnicas, colaboração com times internacionais e consumo de conteúdo no idioma original.',
+        'Nível avançado em inglês, com leitura de documentações técnicas, colaboração com times internacionais e consumo de conteúdo no idioma original.',
       stats: {
         projects: 'Projetos',
         technologies: 'Tecnologias',
@@ -70,12 +70,12 @@ export const translations = {
       subtitle: 'testes de campo',
       viewCode: 'Ver Código',
       liveDemo: 'Ver Site',
-      comingSoon: 'Em breve — fique ligado!',
+      comingSoon: 'Em breve. Fique ligado!',
       items: [
         {
           name: 'Cifra',
           description:
-            'Painel de finanças pessoais gratuito, feito do zero — registro de entradas e saídas, gráficos por dia, semana, mês e ano, orçamentos e metas, controle de contas fixas e contas individuais com dados privados. Next.js, TypeScript e PostgreSQL.',
+            'Painel de finanças pessoais gratuito, feito do zero, com registro de entradas e saídas, gráficos por dia, semana, mês e ano, orçamentos e metas, controle de contas fixas e contas individuais com dados privados. Next.js, TypeScript e PostgreSQL.',
           tags: ['Next.js', 'TypeScript', 'PostgreSQL'],
           github: '#',
           demo: 'https://minhacifra.vercel.app',
@@ -85,7 +85,7 @@ export const translations = {
         {
           name: 'Achou',
           description:
-            'Marketplace completo estilo OLX/Mercado Livre — autenticação, criação de anúncios com upload de fotos, busca com filtros, favoritos, chat entre compradores e vendedores, notificações e painel do usuário. Next.js, TypeScript, Prisma e Framer Motion.',
+            'Marketplace completo estilo OLX/Mercado Livre, com autenticação, criação de anúncios com upload de fotos, busca com filtros, favoritos, chat entre compradores e vendedores, notificações e painel do usuário. Next.js, TypeScript, Prisma e Framer Motion.',
           tags: ['Next.js', 'TypeScript', 'Prisma', 'Framer Motion'],
           github: 'https://github.com/LuigiMello/Achou',
           demo: 'https://achou-alpha.vercel.app',
@@ -95,7 +95,7 @@ export const translations = {
         {
           name: 'CoPrompt',
           description:
-            'Catálogo editorial de prompts de IA para moda e retrato, com fotos reais, scroll infinito e visualizador 3D — Next.js, TypeScript e Framer Motion.',
+            'Catálogo editorial de prompts de IA para moda e retrato, com fotos reais, scroll infinito e visualizador 3D. Feito com Next.js, TypeScript e Framer Motion.',
           tags: ['Next.js', 'TypeScript', 'Framer Motion'],
           github: 'https://github.com/LuigiMello/CoPrompt',
           demo: 'https://luigimello.github.io/CoPrompt/',
@@ -133,7 +133,7 @@ export const translations = {
         },
         {
           name: 'TAITTOO',
-          description: 'Plataforma de tatuagens com IA — geração de designs, chat especialista, exploração por estilos, autenticação e coleção de favoritos.',
+          description: 'Plataforma de tatuagens com IA: geração de designs, chat especialista, exploração por estilos, autenticação e coleção de favoritos.',
           tags: ['Next.js', 'Prisma', 'NextAuth', 'IA'],
           github: 'https://github.com/LuigiMello/taittoo',
           demo: 'https://taittoo.vercel.app',
@@ -142,7 +142,7 @@ export const translations = {
         },
         {
           name: 'Fast Race',
-          description: 'Site de corrida solidária com mapa 3D estilo Google Maps, fluxo completo de inscrição e checkout detalhado — Three.js, GSAP e rotas em Next.js.',
+          description: 'Site de corrida solidária com mapa 3D estilo Google Maps, fluxo completo de inscrição e checkout detalhado. Feito com Three.js, GSAP e rotas em Next.js.',
           tags: ['Next.js', 'Three.js', 'GSAP', 'TypeScript'],
           github: 'https://github.com/LuigiMello/Fast-Race',
           demo: 'https://luigimello.github.io/Fast-Race/',
@@ -207,14 +207,14 @@ export const translations = {
       description:
         'Estou disponível para novos projetos, colaborações e oportunidades. Escolha o canal de suporte que preferir.',
       instagramLabel: 'Instagram',
-      instagramDesc: '@oluigilucio — Me siga',
+      instagramDesc: '@oluigilucio · Me siga',
       youtubeLabel: 'YouTube',
-      youtubeDesc: '@oluigimello — Curiosidades e React',
+      youtubeDesc: '@oluigimello · Curiosidades e React',
       whatsappLabel: 'WhatsApp',
-      whatsappDesc: '(41) 99209-6564 — Vamos conversar',
+      whatsappDesc: '(41) 99209-6564 · Vamos conversar',
       linkedinLabel: 'LinkedIn',
-      linkedinDesc: 'luigimello — Conecte-se comigo',
-      emailCta: 'Abrir chamado — email',
+      linkedinDesc: 'luigimello · Conecte-se comigo',
+      emailCta: 'Abrir chamado por email',
       warranty: 'Garantia\nVitalícia',
     },
     footer: {
@@ -262,12 +262,12 @@ export const translations = {
     about: {
       title: 'Specifications',
       subtitle: 'technical data sheet',
-      p1: "I'm Luigi Mello, a developer passionate about technology with experience in Full Stack web development. I believe that good code goes beyond working — it should be clean, efficient, and scalable.",
+      p1: "I'm Luigi Mello, a developer passionate about technology with experience in Full Stack web development. I believe that good code goes beyond working: it should be clean, efficient, and scalable.",
       p2: 'I work with the main technologies on the market, both in the frontend and backend, always following best development practices. I am naturally curious and love exploring new frameworks and tools.',
       p3: 'Additionally, I have good English proficiency, which allows me to collaborate with international teams, consume technical content in its original language, and expand my professional opportunities.',
       englishBadge: '🇺🇸 Advanced English',
       englishDesc:
-        'Fluent English communication — reading technical documentation, collaborating with international teams, and consuming content in the original language.',
+        'Fluent English communication, from reading technical documentation to collaborating with international teams and consuming content in the original language.',
       stats: {
         projects: 'Projects',
         technologies: 'Technologies',
@@ -293,12 +293,12 @@ export const translations = {
       subtitle: 'field tests',
       viewCode: 'View Code',
       liveDemo: 'Demo',
-      comingSoon: 'Coming soon — stay tuned!',
+      comingSoon: 'Coming soon. Stay tuned!',
       items: [
         {
           name: 'Cifra',
           description:
-            'Free personal finance dashboard built from scratch — income and expense tracking, charts by day, week, month and year, budgets and goals, recurring bills tracking, and per-user accounts with private data. Built with Next.js, TypeScript and PostgreSQL.',
+            'Free personal finance dashboard built from scratch, with income and expense tracking, charts by day, week, month and year, budgets and goals, recurring bills tracking, and per-user accounts with private data. Built with Next.js, TypeScript and PostgreSQL.',
           tags: ['Next.js', 'TypeScript', 'PostgreSQL'],
           github: '#',
           demo: 'https://minhacifra.vercel.app',
@@ -308,7 +308,7 @@ export const translations = {
         {
           name: 'Achou',
           description:
-            'Full OLX/Mercado Livre-style marketplace — authentication, listing creation with photo upload, filtered search, favorites, buyer-seller chat, notifications and a user dashboard. Built with Next.js, TypeScript, Prisma and Framer Motion.',
+            'Full OLX/Mercado Livre style marketplace with authentication, listing creation with photo upload, filtered search, favorites, buyer-seller chat, notifications and a user dashboard. Built with Next.js, TypeScript, Prisma and Framer Motion.',
           tags: ['Next.js', 'TypeScript', 'Prisma', 'Framer Motion'],
           github: 'https://github.com/LuigiMello/Achou',
           demo: 'https://achou-alpha.vercel.app',
@@ -318,7 +318,7 @@ export const translations = {
         {
           name: 'CoPrompt',
           description:
-            'Editorial catalog of AI prompts for fashion and portraits, with real photos, infinite scroll and a 3D viewer — Next.js, TypeScript and Framer Motion.',
+            'Editorial catalog of AI prompts for fashion and portraits, with real photos, infinite scroll and a 3D viewer. Built with Next.js, TypeScript and Framer Motion.',
           tags: ['Next.js', 'TypeScript', 'Framer Motion'],
           github: 'https://github.com/LuigiMello/CoPrompt',
           demo: 'https://luigimello.github.io/CoPrompt/',
@@ -356,7 +356,7 @@ export const translations = {
         },
         {
           name: 'TAITTOO',
-          description: 'AI tattoo platform — design generation, expert chat assistant, style exploration, authentication and a favorites collection.',
+          description: 'AI tattoo platform: design generation, expert chat assistant, style exploration, authentication and a favorites collection.',
           tags: ['Next.js', 'Prisma', 'NextAuth', 'AI'],
           github: 'https://github.com/LuigiMello/taittoo',
           demo: 'https://taittoo.vercel.app',
@@ -365,7 +365,7 @@ export const translations = {
         },
         {
           name: 'Fast Race',
-          description: 'Charity race site with a Google Maps-style 3D route view, a full registration flow, and a detailed checkout — built with Three.js, GSAP and Next.js.',
+          description: 'Charity race site with a Google Maps-style 3D route view, a full registration flow and a detailed checkout. Built with Three.js, GSAP and Next.js.',
           tags: ['Next.js', 'Three.js', 'GSAP', 'TypeScript'],
           github: 'https://github.com/LuigiMello/Fast-Race',
           demo: 'https://luigimello.github.io/Fast-Race/',
@@ -430,14 +430,14 @@ export const translations = {
       description:
         'I am available for new projects, collaborations, and opportunities. Choose whichever support channel you prefer.',
       instagramLabel: 'Instagram',
-      instagramDesc: '@oluigilucio — Follow me',
+      instagramDesc: '@oluigilucio · Follow me',
       youtubeLabel: 'YouTube',
-      youtubeDesc: '@oluigimello — Curiosities & React',
+      youtubeDesc: '@oluigimello · Curiosities & React',
       whatsappLabel: 'WhatsApp',
-      whatsappDesc: '(41) 99209-6564 — Let\'s talk',
+      whatsappDesc: '(41) 99209-6564 · Let\'s talk',
       linkedinLabel: 'LinkedIn',
-      linkedinDesc: 'luigimello — Connect with me',
-      emailCta: 'Open a ticket — email',
+      linkedinDesc: 'luigimello · Connect with me',
+      emailCta: 'Open a ticket by email',
       warranty: 'Lifetime\nWarranty',
     },
     footer: {

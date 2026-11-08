@@ -1,10 +1,5 @@
-import MacSim           from '@/components/MacSim/MacSim';
-import PortfolioContent from '@/components/PortfolioContent/PortfolioContent';
+import DeskPortfolio from '@/components/Desk/DeskPortfolio';
 
 export default function Home() {
-  return (
-    <MacSim>
-      <PortfolioContent />
-    </MacSim>
-  );
+  return <DeskPortfolio />;
 }
